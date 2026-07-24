@@ -1,4 +1,4 @@
-# Duyên Dịch — DCGF (Dynamic Condition & Graph Framework)
+39736aab3c82b4eeac49ab0a5f29e329a998c0c2# Duyên Dịch — DCGF (Dynamic Condition & Graph Framework)
 
 Triển khai tham chiếu (reference implementation) bằng Python cho kiến trúc
 **Duyên Dịch (DCGF)** mô tả trong tài liệu *"Đặc Tả Bản Thể Học Và Kiến Trúc
