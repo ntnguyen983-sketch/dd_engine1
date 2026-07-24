@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "description": "Tham số khởi tạo (Hyperparameters) theo Tiên đề A5: mọi hệ số không chứng minh trực tiếp từ toán học phải hạ xuống làm Tham số khởi tạo, liên tục tối ưu qua thực chứng (S11 Self-Correction Loop).",
+    "reference": "Tiên đề A5, Section 2.6 (S11)"
+  },
+  "psi_directional_weight": 1.0,
+  "force_active_line_weight": {
+    "1": 0.15, "2": 0.30, "3": 0.45, "4": 0.60, "5": 0.80, "6": 1.00
+  },
+  "momentum_decay_rate": 0.1,
+  "momentum_max": 1.0,
+  "mdl_cost_weights": {
+    "w1_fit": 0.35,
+    "w2_constraint": 0.20,
+    "w3_history": 0.15,
+    "w4_evidence": 0.20,
+    "w5_complexity": 0.10
+  },
+  "macro_field_weights": {
+    "dia": 1.0,
+    "nhan": 1.0,
+    "thien": 1.0
+  },
+  "confidence_level_weights": {
+    "level0_ban_the": 0.10,
+    "level1_do_luong": 0.20,
+    "level2_dong_luc": 0.25,
+    "level3_can_thiep": 0.20,
+    "level4_tong_quat_hoa": 0.25
+  }
+}

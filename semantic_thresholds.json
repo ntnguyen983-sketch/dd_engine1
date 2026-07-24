@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "description": "S07 Output Matrix - ánh xạ điều kiện toán học từ Vectơ Khí sang nhãn ngữ nghĩa. Đánh giá tuần tự theo 'order'; SIE có quyền áp đảo (Section 2.5, Quy Tắc SIE Áp Đảo S07).",
+    "reference": "Phụ lục 5.2, Section 2.5 (S10)"
+  },
+  "density_direction_rules": [
+    {"order": 1, "label": "TỤ", "condition": "I >= 0.75 and D > 0", "dien_giai": "Mật độ cao, tăng trưởng, hội tụ nguồn lực."},
+    {"order": 2, "label": "HỢP", "condition": "I >= 0.75 and D <= 0", "dien_giai": "Mật độ cao, thu hẹp, khép kín cấu trúc."},
+    {"order": 3, "label": "TÁN", "condition": "I < 0.30 and D > 0", "dien_giai": "Mật độ lỏng lẻo, phát tán, mở rộng ranh giới."},
+    {"order": 4, "label": "LY", "condition": "I < 0.30 and D <= 0", "dien_giai": "Mật độ suy thoái, chia rẽ, suy giảm liên kết."}
+  ],
+  "spatial_force_rules": [
+    {"order": 1, "label": "HIỆN", "condition": "S >= 0.70 and F > 0.5", "dien_giai": "Biểu hiện rõ ràng, bộc phát ra ngoại cảnh."},
+    {"order": 2, "label": "ẨN", "condition": "S < 0.30", "dien_giai": "Tiềm ẩn dưới bề mặt, tích tụ nội tại."}
+  ],
+  "spatial_layer_table": {
+    "0.0": {"tang_hao": "Hào 1, 2", "pham_vi": "Địa (Nội quái)", "co_che": "Xung lực tích tụ nội tại; không ảnh hưởng vĩ mô."},
+    "0.5": {"tang_hao": "Hào 3, 4", "pham_vi": "Nhân (Giao thoa)", "co_che": "Lan truyền qua vùng đệm ranh giới."},
+    "1.0": {"tang_hao": "Hào 5, 6", "pham_vi": "Thiên (Ngoại quái)", "co_che": "Bộc phát ra toàn hệ thống vĩ mô."}
+  }
+}

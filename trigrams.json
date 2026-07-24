@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "description": "Bát Quái theo thứ tự số Mai Hoa (1-8). bits: [h1,h2,h3] tính từ hào dưới (đáy) lên hào trên (đỉnh). 1=Dương(Yang/vạch liền), 0=Âm(Yin/vạch đứt).",
+    "reference": "Section 3.1 (PGL), Section 3.9 (Structural Mapping), Phụ lục 5.1"
+  },
+  "1": {"ten": "Càn", "ky_hieu": "☰", "bits": [1, 1, 1], "ngu_hanh": "Kim", "thuoc_tinh": "Trời, Cương kiện", "gia_dinh": "Cha"},
+  "2": {"ten": "Đoài", "ky_hieu": "☱", "bits": [1, 1, 0], "ngu_hanh": "Kim", "thuoc_tinh": "Đầm, Hỷ duyệt", "gia_dinh": "Thiếu nữ"},
+  "3": {"ten": "Ly", "ky_hieu": "☲", "bits": [1, 0, 1], "ngu_hanh": "Hỏa", "thuoc_tinh": "Lửa, Ly minh", "gia_dinh": "Trung nữ"},
+  "4": {"ten": "Chấn", "ky_hieu": "☳", "bits": [1, 0, 0], "ngu_hanh": "Mộc", "thuoc_tinh": "Sấm, Chấn động", "gia_dinh": "Trưởng nam"},
+  "5": {"ten": "Tốn", "ky_hieu": "☴", "bits": [0, 1, 1], "ngu_hanh": "Mộc", "thuoc_tinh": "Gió, Nhập", "gia_dinh": "Trưởng nữ"},
+  "6": {"ten": "Khảm", "ky_hieu": "☵", "bits": [0, 1, 0], "ngu_hanh": "Thủy", "thuoc_tinh": "Nước, Hãm hiểm", "gia_dinh": "Trung nam"},
+  "7": {"ten": "Cấn", "ky_hieu": "☶", "bits": [0, 0, 1], "ngu_hanh": "Thổ", "thuoc_tinh": "Núi, Chỉ tĩnh", "gia_dinh": "Thiếu nam"},
+  "8": {"ten": "Khôn", "ky_hieu": "☷", "bits": [0, 0, 0], "ngu_hanh": "Thổ", "thuoc_tinh": "Đất, Nhu thuận", "gia_dinh": "Mẹ"},
+
+  "ngu_hanh_sinh": {"Kim": "Thủy", "Thủy": "Mộc", "Mộc": "Hỏa", "Hỏa": "Thổ", "Thổ": "Kim"},
+  "ngu_hanh_khac": {"Kim": "Mộc", "Mộc": "Thổ", "Thổ": "Thủy", "Thủy": "Hỏa", "Hỏa": "Kim"}
+}
