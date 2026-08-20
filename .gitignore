@@ -12,6 +12,7 @@ venv/
 .coverage
 htmlcov/
 *.log
+live_cases_*/
 
 # Vercel local metadata
 .vercel/
