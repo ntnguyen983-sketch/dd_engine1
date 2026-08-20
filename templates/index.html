@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08111f">
+  <title>DUYÊN DỊCH / DCGF</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #eef4ff;
+      --muted: #91a4bd;
+      --line: rgba(161, 183, 210, .18);
+      --panel: rgba(13, 27, 46, .82);
+      --panel-strong: #10243e;
+      --navy: #08111f;
+      --gold: #e9bd70;
+      --gold-soft: rgba(233, 189, 112, .14);
+      --blue: #81b8ff;
+      --green: #67d3a5;
+      --red: #ff8c8c;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--navy); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% -8%, rgba(56, 103, 171, .28), transparent 36rem),
+        radial-gradient(circle at 100% 8%, rgba(155, 93, 49, .2), transparent 30rem),
+        var(--navy);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .shell { width: min(100% - 28px, 1080px); margin: 0 auto; padding: 22px 0 48px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 30px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(233, 189, 112, .6);
+      border-radius: 12px; color: var(--gold); background: var(--gold-soft); font-weight: 800; letter-spacing: .08em;
+    }
+    .brand-name { margin: 0; font-size: .9rem; letter-spacing: .19em; font-weight: 800; }
+    .brand-sub { margin: 2px 0 0; color: var(--muted); font-size: .72rem; letter-spacing: .12em; }
+    .health {
+      display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px;
+      padding: 7px 11px; color: var(--muted); background: rgba(255,255,255,.03); font-size: .78rem; white-space: nowrap;
+    }
+    .health-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); box-shadow: 0 0 0 4px rgba(145,164,189,.1); }
+    .health.ok { color: var(--green); border-color: rgba(103,211,165,.28); }
+    .health.ok .health-dot { background: var(--green); box-shadow: 0 0 0 4px rgba(103,211,165,.1); }
+    .health.error { color: var(--red); border-color: rgba(255,140,140,.28); }
+    .health.error .health-dot { background: var(--red); box-shadow: 0 0 0 4px rgba(255,140,140,.1); }
+
+    .hero { margin-bottom: 26px; max-width: 760px; }
+    .eyebrow { margin: 0 0 9px; color: var(--gold); font-size: .74rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.35rem, 10vw, 5rem); line-height: .98; letter-spacing: -.045em; font-weight: 600; }
+    .hero-copy { max-width: 650px; margin: 17px 0 0; color: var(--muted); font-size: 1rem; }
+    .grid { display: grid; gap: 18px; }
+    .card { border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+    .form-card { padding: 20px; }
+    .section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .section-heading h2 { margin: 0; font-size: 1.12rem; }
+    .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: .84rem; }
+    .required { color: var(--gold); }
+    label { display: block; margin: 16px 0 8px; color: #dce7f6; font-size: .88rem; font-weight: 700; }
+    input {
+      width: 100%; border: 1px solid var(--line); border-radius: 13px; outline: none; padding: 14px 15px;
+      color: var(--ink); background: rgba(4, 12, 23, .6); transition: border-color .2s, box-shadow .2s;
+    }
+    input::placeholder { color: #637894; }
+    input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(129,184,255,.12); }
+    input.invalid { border-color: var(--red); }
+    .field-hint { margin: 7px 0 0; color: var(--muted); font-size: .77rem; }
+    .actions { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+    .primary, .secondary {
+      min-height: 48px; border-radius: 13px; padding: 12px 16px; font-weight: 800; transition: transform .2s, opacity .2s, background .2s;
+    }
+    .primary { flex: 1; border: 1px solid #f1ca7e; color: #1e1609; background: linear-gradient(135deg, #f0cb83, #d49a48); box-shadow: 0 10px 28px rgba(213,151,70,.18); }
+    .primary:hover { transform: translateY(-1px); }
+    .primary:disabled { cursor: wait; opacity: .62; transform: none; }
+    .secondary { border: 1px solid var(--line); color: var(--ink); background: rgba(255,255,255,.04); }
+    .secondary:hover { background: rgba(255,255,255,.08); }
+    .loading { display: none; margin-top: 16px; border: 1px solid rgba(233,189,112,.26); border-radius: 14px; padding: 13px; background: rgba(233,189,112,.08); }
+    .loading.show { display: block; }
+    .loading-row { display: flex; align-items: center; gap: 10px; color: #f4d79f; font-size: .86rem; font-weight: 700; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(244,215,159,.3); border-top-color: var(--gold); border-radius: 50%; animation: spin .9s linear infinite; }
+    .loading small { display: block; margin: 7px 0 0 26px; color: var(--muted); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { display: none; margin-top: 16px; border: 1px solid rgba(255,140,140,.32); border-radius: 14px; padding: 13px; color: #ffc0c0; background: rgba(255,80,80,.08); }
+    .error.show { display: block; }
+    .error strong { display: block; margin-bottom: 3px; }
+    .output-card { display: none; padding: 20px; }
+    .output-card.show { display: block; }
+    .output-card h2 { margin: 0; font-size: 1.12rem; }
+    .output-card > p { margin: 4px 0 18px; color: var(--muted); font-size: .84rem; }
+    .summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .metric { min-height: 82px; border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: rgba(255,255,255,.035); }
+    .metric-label { color: var(--muted); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+    .metric-value { margin-top: 5px; color: var(--gold); font-size: 1rem; font-weight: 800; overflow-wrap: anywhere; }
+    .metric-value.small { color: var(--ink); font-size: .86rem; line-height: 1.35; }
+    .interpretation { margin-top: 18px; border: 1px solid rgba(129,184,255,.23); border-radius: 16px; padding: 16px; background: rgba(129,184,255,.07); }
+    .interpretation h3 { margin: 0 0 9px; color: var(--blue); font-size: .86rem; letter-spacing: .08em; text-transform: uppercase; }
+    .interpretation-body { white-space: pre-wrap; color: #e7effa; font-size: .95rem; }
+    details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+    summary { cursor: pointer; color: var(--muted); font-size: .83rem; font-weight: 700; }
+    pre { margin: 12px 0 0; max-height: 420px; overflow: auto; white-space: pre-wrap; word-break: break-word; color: #c5d6eb; font: .75rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .empty { padding: 24px 0 8px; color: var(--muted); text-align: center; font-size: .86rem; }
+    footer { margin-top: 30px; color: #60748e; text-align: center; font-size: .74rem; }
+
+    @media (min-width: 720px) {
+      .shell { padding-top: 34px; }
+      .form-card, .output-card { padding: 28px; }
+      .grid { grid-template-columns: minmax(310px, .8fr) minmax(0, 1.2fr); align-items: start; }
+      .summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">DD</div>
+        <div><p class="brand-name">DUYÊN DỊCH</p><p class="brand-sub">DCGF · FIELD INTERFACE</p></div>
+      </div>
+      <div id="health-badge" class="health" role="status" aria-live="polite"><span class="health-dot"></span><span id="health-text">Đang kiểm tra hệ thống</span></div>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Một tín hiệu · Một lần quan sát</p>
+      <h1 id="page-title">Đọc thế và hướng<br>của câu hỏi.</h1>
+      <p class="hero-copy">Nhập câu hỏi cùng một chuỗi sáu chữ số. Engine sẽ dựng báo cáo S12, sau đó lớp AI diễn giải kết quả theo ngữ cảnh bạn cung cấp.</p>
+    </section>
+
+    <section class="grid">
+      <form id="analysis-form" class="card form-card" novalidate>
+        <div class="section-heading">
+          <div><h2>Khởi tạo phiên phân tích</h2><p>Hai trường đều bắt buộc.</p></div>
+          <span class="required">01</span>
+        </div>
+
+        <label for="question">Câu hỏi <span class="required">*</span></label>
+        <input id="question" name="question" type="text" autocomplete="off" placeholder="Ví dụ: tình cảm, công việc, quyết định..." required>
+        <p class="field-hint">Viết ngắn gọn điều bạn đang muốn quan sát.</p>
+
+        <label for="signal">6 chữ số <span class="required">*</span></label>
+        <input id="signal" name="signal" type="text" inputmode="numeric" autocomplete="off" maxlength="6" pattern="[0-9]{6}" placeholder="Ví dụ: 369147" required>
+        <p class="field-hint">Một tín hiệu gồm đúng sáu chữ số, không có khoảng trắng.</p>
+
+        <div class="actions">
+          <button id="submit-button" class="primary" type="submit">GIEO QUẺ / PHÂN TÍCH</button>
+          <button id="health-button" class="secondary" type="button">Kiểm tra</button>
+        </div>
+
+        <div id="loading" class="loading" role="status" aria-live="polite">
+          <div class="loading-row"><span class="spinner" aria-hidden="true"></span><span id="loading-title">Engine đang tính và AI đang diễn giải...</span></div>
+          <small id="loading-detail">Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.</small>
+        </div>
+        <div id="error" class="error" role="alert"><strong>Không thể hoàn tất phân tích.</strong><span id="error-text"></span></div>
+      </form>
+
+      <section id="output-card" class="card output-card" aria-live="polite" aria-labelledby="output-title">
+        <h2 id="output-title">Kết quả phiên phân tích</h2>
+        <p>Engine Output được giữ nguyên từ API; các chỉ số chính được tóm tắt để đọc nhanh trên điện thoại.</p>
+        <div id="summary" class="summary"></div>
+        <div class="interpretation">
+          <h3>AI Interpretation</h3>
+          <div id="interpretation" class="interpretation-body">Chưa có diễn giải.</div>
+        </div>
+        <details>
+          <summary>Xem Engine Output đầy đủ</summary>
+          <pre id="raw-output">{}</pre>
+        </details>
+      </section>
+    </section>
+
+    <div id="empty-state" class="empty">Chưa có kết quả. Hãy bắt đầu bằng một câu hỏi rõ ràng.</div>
+    <footer>DUYÊN DỊCH / DCGF · Kết quả là một khung quan sát, không phải dự đoán tất định.</footer>
+  </main>
+
+  <script>
+    const form = document.getElementById('analysis-form');
+    const questionInput = document.getElementById('question');
+    const signalInput = document.getElementById('signal');
+    const submitButton = document.getElementById('submit-button');
+    const healthButton = document.getElementById('health-button');
+    const healthBadge = document.getElementById('health-badge');
+    const healthText = document.getElementById('health-text');
+    const loading = document.getElementById('loading');
+    const loadingTitle = document.getElementById('loading-title');
+    const loadingDetail = document.getElementById('loading-detail');
+    const errorBox = document.getElementById('error');
+    const errorText = document.getElementById('error-text');
+    const outputCard = document.getElementById('output-card');
+    const emptyState = document.getElementById('empty-state');
+    const summary = document.getElementById('summary');
+    const interpretation = document.getElementById('interpretation');
+    const rawOutput = document.getElementById('raw-output');
+    let lastPayload = null;
+    let loadingTimer = null;
+    let timeoutTimer = null;
+
+    const text = (value, fallback = '—') => value === undefined || value === null || value === '' ? fallback : String(value);
+    const jsonText = value => {
+      if (value === undefined || value === null) return '—';
+      if (typeof value === 'string') return value;
+      try { return JSON.stringify(value); } catch (_) { return String(value); }
+    };
+    const nested = (object, path, fallback = undefined) => path.reduce((current, key) => current && current[key] !== undefined ? current[key] : undefined, object) ?? fallback;
+
+    function setHealth(kind, label) {
+      healthBadge.className = `health ${kind || ''}`.trim();
+      healthText.textContent = label;
+    }
+
+    async function getJson(url, options = {}) {
+      const response = await fetch(url, { cache: 'no-store', ...options });
+      let data;
+      try { data = await response.json(); } catch (_) { data = { error: `Phản hồi không phải JSON (HTTP ${response.status}).` }; }
+      if (!response.ok) {
+        const failure = new Error(data.error || `Yêu cầu thất bại (HTTP ${response.status}).`);
+        failure.status = response.status;
+        throw failure;
+      }
+      return { response, data };
+    }
+
+    async function checkHealth() {
+      setHealth('', 'Đang kiểm tra hệ thống');
+      try {
+        const { data } = await getJson('/health');
+        const model = data.gemini_model ? ` · ${data.gemini_model}` : '';
+        setHealth('ok', `Hệ thống sẵn sàng${model}`);
+      } catch (failure) {
+        setHealth('error', `Health lỗi${failure.status ? ` · ${failure.status}` : ''}`);
+      }
+    }
+
+    function setBusy(isBusy) {
+      submitButton.disabled = isBusy;
+      healthButton.disabled = isBusy;
+      questionInput.disabled = isBusy;
+      signalInput.disabled = isBusy;
+      loading.classList.toggle('show', isBusy);
+      if (!isBusy) {
+        clearInterval(loadingTimer);
+        clearTimeout(timeoutTimer);
+      }
+    }
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorBox.classList.add('show');
+    }
+
+    function hideError() { errorBox.classList.remove('show'); }
+
+    function validate() {
+      const question = questionInput.value.trim();
+      const signal = signalInput.value.trim();
+      questionInput.classList.toggle('invalid', !question);
+      signalInput.classList.toggle('invalid', !/^\d{6}$/.test(signal));
+      if (!question) return 'Vui lòng nhập câu hỏi.';
+      if (!/^\d{6}$/.test(signal)) return '6 chữ số phải gồm đúng sáu ký tự số, ví dụ 369147.';
+      return null;
+    }
+
+    function metric(label, value, small = false) {
+      return `<div class="metric"><div class="metric-label">${label}</div><div class="metric-value${small ? ' small' : ''}">${value}</div></div>`;
+    }
+
+    function renderResult(data) {
+      const report = data.engine_output || {};
+      const technical = report['1_phan_tich_ky_thuat'] || {};
+      const hexagrams = technical.ma_que || {};
+      const mainHex = hexagrams.que_chu || {};
+      const changedHex = hexagrams.que_bien || {};
+      const dynamics = report['2_dong_luc_hoc'] || {};
+      const progress = report['3_tien_trinh_van_hanh'] || {};
+      const trend = progress.xu_huong || {};
+      const expression = progress.bieu_hien || {};
+
+      summary.innerHTML = [
+        metric('Quẻ chủ', text(mainHex.ten_que), true),
+        metric('Quẻ biến', text(changedHex.ten_que), true),
+        metric('Hào động', text(mainHex.active_line)),
+        metric('Tin cậy C', text(technical.chi_so_tin_cay_C)),
+        metric('Lực tổng thể F', text(dynamics.luc_tong_the_F)),
+        metric('Vectơ Khí', jsonText(technical.vecto_khi), true),
+        metric('Xu hướng', text(trend.label || trend.dien_giai), true),
+        metric('Biểu hiện', text(expression.label || expression.dien_giai), true)
+      ].join('');
+      interpretation.textContent = text(data.ai_interpretation, 'API chưa trả về phần AI Interpretation.');
+      rawOutput.textContent = JSON.stringify(report, null, 2);
+      outputCard.classList.add('show');
+      emptyState.style.display = 'none';
+      outputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function startLoadingMessages() {
+      let seconds = 0;
+      loadingTitle.textContent = 'Engine đang tính và AI đang diễn giải...';
+      loadingDetail.textContent = 'Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.';
+      loadingTimer = setInterval(() => {
+        seconds += 5;
+        if (seconds >= 90) loadingTitle.textContent = 'Đang hoàn thiện diễn giải — gần xong...';
+        else if (seconds >= 45) loadingTitle.textContent = 'Engine đã phản hồi, AI đang hoàn thiện phần đọc nghĩa...';
+        loadingDetail.textContent = `Đã chờ khoảng ${seconds} giây. Không đóng trang trong lúc xử lý.`;
+      }, 5000);
+    }
+
+    async function analyze(payload) {
+      const controller = new AbortController();
+      timeoutTimer = setTimeout(() => controller.abort(), 130000);
+      try {
+        const { data } = await getJson('/api/duyen-dich/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        renderResult(data);
+      } catch (failure) {
+        if (failure.name === 'AbortError') showError('API chưa phản hồi trong 130 giây. Hãy thử lại; backend có thể cần tới 120 giây cho một phiên phân tích.');
+        else showError(`${failure.message}${failure.status ? ` (HTTP ${failure.status})` : ''}`);
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      hideError();
+      const validationError = validate();
+      if (validationError) { showError(validationError); return; }
+      lastPayload = { mode: 'mot_tin_hieu', total: Number(signalInput.value), question: questionInput.value.trim() };
+      setBusy(true);
+      startLoadingMessages();
+      analyze(lastPayload);
+    });
+
+    healthButton.addEventListener('click', checkHealth);
+    signalInput.addEventListener('input', () => { signalInput.value = signalInput.value.replace(/\D/g, '').slice(0, 6); });
+    questionInput.addEventListener('input', hideError);
+    signalInput.addEventListener('input', hideError);
+    checkHealth();
+  </script>
+</body>
+</html>

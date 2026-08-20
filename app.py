@@ -6,7 +6,7 @@ from __future__ import annotations
 import os
 from dataclasses import asdict, is_dataclass
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 
 from engine.pipeline import cast_and_run
 from engine.report import build_s12_report
@@ -35,6 +35,11 @@ def _run_engine(body: dict):
     if mode == "mot_tin_hieu":
         return cast_and_run("mot_tin_hieu", total=int(body["total"]))
     return cast_and_run("thu_cong", upper=int(body["upper"]), lower=int(body["lower"]), active_line=int(body["active_line"]))
+
+
+@app.get("/")
+def index():
+    return render_template("index.html")
 
 
 @app.get("/health")
