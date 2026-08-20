@@ -1,30 +1,19 @@
 #!/usr/bin/env python3
-"""
-app.py — Web API cho hệ thống DUYÊN DỊCH (DCGF), dựng trên Flask.
+"""Web API cho hệ thống DUYÊN DỊCH (DCGF).
 
-Chạy:
-    python app.py
-    # mặc định lắng nghe tại http://127.0.0.1:5000
-
-Endpoints:
-    GET  /health
-    POST /api/khoi-que
-        Body JSON, một trong các dạng:
-          {"mode": "thoi_gian"}
-          {"mode": "hai_so", "x": 7, "y": 3}
-          {"mode": "mot_tin_hieu", "total": 4}
-          {"mode": "thu_cong", "upper": 4, "lower": 2, "active_line": 4}
-        Trả về Output Chuẩn Hóa S12 (JSON).
+Gemini is an optional post-engine interpretation layer. It reads
+GEMINI_API_KEY from the runtime environment and never stores the secret in Git.
 """
 
 from __future__ import annotations
 
-from dataclasses import is_dataclass, asdict
+from dataclasses import asdict, is_dataclass
 
 from flask import Flask, jsonify, request
 
 from engine.pipeline import cast_and_run
 from engine.report import build_s12_report
+from gemini_service import GeminiConfigurationError, analyze_engine_output, generate_text
 
 app = Flask(__name__)
 
@@ -37,33 +26,43 @@ def _json_safe(obj):
     return str(obj)
 
 
+def _run_engine(body: dict):
+    mode = body.get("mode")
+    if mode not in ("thoi_gian", "hai_so", "mot_tin_hieu", "thu_cong"):
+        raise ValueError("Trường 'mode' phải là một trong: thoi_gian, hai_so, mot_tin_hieu, thu_cong")
+
+    if mode == "thoi_gian":
+        return cast_and_run("thoi_gian")
+    if mode == "hai_so":
+        return cast_and_run("hai_so", x=int(body["x"]), y=int(body["y"]))
+    if mode == "mot_tin_hieu":
+        return cast_and_run("mot_tin_hieu", total=int(body["total"]))
+    return cast_and_run(
+        "thu_cong",
+        upper=int(body["upper"]),
+        lower=int(body["lower"]),
+        active_line=int(body["active_line"]),
+    )
+
+
 @app.get("/health")
 def health():
-    return jsonify({"status": "ok", "system": "Duyên Dịch (DCGF)", "version": "1.0.0"})
+    import os
+
+    return jsonify({
+        "status": "ok",
+        "system": "Duyên Dịch (DCGF)",
+        "version": "1.0.0",
+        "gemini_configured": bool(os.getenv("GEMINI_API_KEY")),
+    })
 
 
 @app.post("/api/khoi-que")
 def khoi_que():
     body = request.get_json(silent=True) or {}
-    mode = body.get("mode")
-    if mode not in ("thoi_gian", "hai_so", "mot_tin_hieu", "thu_cong"):
-        return jsonify({"error": "Trường 'mode' phải là một trong: thoi_gian, hai_so, mot_tin_hieu, thu_cong"}), 400
-
     try:
-        if mode == "thoi_gian":
-            result = cast_and_run("thoi_gian")
-        elif mode == "hai_so":
-            result = cast_and_run("hai_so", x=int(body["x"]), y=int(body["y"]))
-        elif mode == "mot_tin_hieu":
-            result = cast_and_run("mot_tin_hieu", total=int(body["total"]))
-        else:  # thu_cong
-            result = cast_and_run(
-                "thu_cong",
-                upper=int(body["upper"]),
-                lower=int(body["lower"]),
-                active_line=int(body["active_line"]),
-            )
-    except (KeyError, ValueError) as exc:
+        result = _run_engine(body)
+    except (KeyError, ValueError, TypeError) as exc:
         return jsonify({"error": f"Tham số không hợp lệ: {exc}"}), 400
 
     report = build_s12_report(result)
@@ -72,6 +71,56 @@ def khoi_que():
         status=200,
         mimetype="application/json",
     )
+
+
+@app.post("/api/ai")
+def ai():
+    """Generic Gemini endpoint for AI work that does not require engine execution."""
+    body = request.get_json(silent=True) or {}
+    prompt = body.get("prompt")
+    if not isinstance(prompt, str) or not prompt.strip():
+        return jsonify({"error": "Trường 'prompt' bắt buộc và phải là chuỗi không rỗng."}), 400
+
+    try:
+        text = generate_text(
+            prompt,
+            system_instruction=body.get("system_instruction"),
+            model=body.get("model"),
+        )
+    except GeminiConfigurationError as exc:
+        return jsonify({"error": str(exc), "code": "GEMINI_NOT_CONFIGURED"}), 503
+    except Exception as exc:
+        app.logger.exception("Gemini request failed")
+        return jsonify({"error": str(exc), "code": "GEMINI_REQUEST_FAILED"}), 502
+
+    return jsonify({"model": body.get("model"), "text": text})
+
+
+@app.post("/api/duyen-dich/analyze")
+def duyen_dich_analyze():
+    """Run the deterministic engine first, then let Gemini interpret the result.
+
+    Gemini cannot modify the engine result; it receives a serialized snapshot only.
+    """
+    body = request.get_json(silent=True) or {}
+    question = body.get("question", "")
+
+    try:
+        engine_result = _run_engine(body)
+        report = build_s12_report(engine_result)
+        text = analyze_engine_output(report, question=question)
+    except (KeyError, ValueError, TypeError) as exc:
+        return jsonify({"error": f"Tham số Engine không hợp lệ: {exc}"}), 400
+    except GeminiConfigurationError as exc:
+        return jsonify({"error": str(exc), "code": "GEMINI_NOT_CONFIGURED"}), 503
+    except Exception as exc:
+        app.logger.exception("Duyên Dịch Gemini analysis failed")
+        return jsonify({"error": str(exc), "code": "ANALYSIS_FAILED"}), 502
+
+    return jsonify({
+        "engine_output": report,
+        "ai_interpretation": text,
+    })
 
 
 if __name__ == "__main__":
