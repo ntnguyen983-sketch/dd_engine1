@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Duyên Dịch — API Test</title><style>body{font-family:system-ui;max-width:760px;margin:40px auto;padding:20px}button{display:block;width:100%;padding:14px;margin:10px 0;cursor:pointer}pre{white-space:pre-wrap;background:#f4f4f4;padding:16px;border-radius:8px;min-height:120px}</style></head>
+<body><h1>Duyên Dịch API Test</h1><p>Kiểm tra từng tầng của deployment.</p><button onclick="health()">1. TEST HEALTH</button><button onclick="gemini()">2. TEST GEMINI</button><button onclick="engine()">3. TEST DUYÊN DỊCH</button><pre id="out">Chưa chạy test.</pre><script>
+const out=document.getElementById('out'); const show=x=>out.textContent=typeof x==='string'?x:JSON.stringify(x,null,2);
+async function health(){try{const r=await fetch('/health');show({http:r.status,data:await r.json()})}catch(e){show(e.stack)}}
+async function gemini(){try{const r=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:'Trả lời đúng 3 từ: Gemini đã thông'})});show({http:r.status,data:await r.json()})}catch(e){show(e.stack)}}
+async function engine(){try{const r=await fetch('/api/duyen-dich/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'mot_tin_hieu',total:369147,question:'tình cảm'})});show({http:r.status,data:await r.json()})}catch(e){show(e.stack)}}
+</script></body></html>
