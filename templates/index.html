@@ -3,352 +3,404 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#08111f">
+  <meta name="theme-color" content="#07111f">
   <title>DUYÊN DỊCH / DCGF</title>
   <style>
     :root {
       color-scheme: dark;
-      --ink: #eef4ff;
-      --muted: #91a4bd;
-      --line: rgba(161, 183, 210, .18);
-      --panel: rgba(13, 27, 46, .82);
-      --panel-strong: #10243e;
-      --navy: #08111f;
-      --gold: #e9bd70;
-      --gold-soft: rgba(233, 189, 112, .14);
-      --blue: #81b8ff;
-      --green: #67d3a5;
-      --red: #ff8c8c;
-      --shadow: 0 24px 70px rgba(0, 0, 0, .28);
+      --bg: #07111f;
+      --panel: rgba(14, 28, 47, .92);
+      --panel-strong: #111f34;
+      --line: rgba(164, 190, 222, .17);
+      --line-strong: rgba(239, 183, 84, .45);
+      --text: #edf4fb;
+      --muted: #94a7bc;
+      --gold: #e9bd61;
+      --gold-soft: #f9e4a3;
+      --cyan: #78d4d0;
+      --danger: #ff9a8e;
+      --shadow: 0 22px 60px rgba(0, 0, 0, .25);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
-    html { background: var(--navy); }
-    body {
-      margin: 0;
-      min-width: 320px;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 12% -8%, rgba(56, 103, 171, .28), transparent 36rem),
-        radial-gradient(circle at 100% 8%, rgba(155, 93, 49, .2), transparent 30rem),
-        var(--navy);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.55;
-    }
-
-    button, input { font: inherit; }
+    html { min-width: 320px; background: var(--bg); scroll-behavior: smooth; }
+    body { margin: 0; min-height: 100vh; color: var(--text); background:
+      radial-gradient(circle at 88% 6%, rgba(151, 82, 86, .24), transparent 32rem),
+      radial-gradient(circle at 9% 30%, rgba(37, 93, 137, .18), transparent 26rem), var(--bg); }
+    button, input, textarea { font: inherit; }
     button { cursor: pointer; }
-    .shell { width: min(100% - 28px, 1080px); margin: 0 auto; padding: 22px 0 48px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 30px; }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-mark {
-      display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(233, 189, 112, .6);
-      border-radius: 12px; color: var(--gold); background: var(--gold-soft); font-weight: 800; letter-spacing: .08em;
-    }
-    .brand-name { margin: 0; font-size: .9rem; letter-spacing: .19em; font-weight: 800; }
-    .brand-sub { margin: 2px 0 0; color: var(--muted); font-size: .72rem; letter-spacing: .12em; }
-    .health {
-      display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px;
-      padding: 7px 11px; color: var(--muted); background: rgba(255,255,255,.03); font-size: .78rem; white-space: nowrap;
-    }
-    .health-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); box-shadow: 0 0 0 4px rgba(145,164,189,.1); }
-    .health.ok { color: var(--green); border-color: rgba(103,211,165,.28); }
-    .health.ok .health-dot { background: var(--green); box-shadow: 0 0 0 4px rgba(103,211,165,.1); }
-    .health.error { color: var(--red); border-color: rgba(255,140,140,.28); }
-    .health.error .health-dot { background: var(--red); box-shadow: 0 0 0 4px rgba(255,140,140,.1); }
-
-    .hero { margin-bottom: 26px; max-width: 760px; }
-    .eyebrow { margin: 0 0 9px; color: var(--gold); font-size: .74rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-    h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.35rem, 10vw, 5rem); line-height: .98; letter-spacing: -.045em; font-weight: 600; }
-    .hero-copy { max-width: 650px; margin: 17px 0 0; color: var(--muted); font-size: 1rem; }
-    .grid { display: grid; gap: 18px; }
-    .card { border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
-    .form-card { padding: 20px; }
-    .section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-    .section-heading h2 { margin: 0; font-size: 1.12rem; }
-    .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: .84rem; }
+    button:disabled { cursor: wait; opacity: .58; }
+    .app-shell { min-height: 100vh; padding-bottom: 92px; }
+    .app { width: min(1180px, 100%); margin: 0 auto; padding: 18px 16px 32px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(233, 189, 97, .65); border-radius: 11px; color: var(--gold-soft); font-size: 11px; font-weight: 800; letter-spacing: .08em; background: rgba(233, 189, 97, .13); }
+    .brand-name { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .2em; }
+    .brand-sub { margin: 3px 0 0; color: var(--muted); font-size: 9px; letter-spacing: .12em; }
+    .health { display: inline-flex; align-items: center; gap: 7px; max-width: 180px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 10px; text-align: right; }
+    .health-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px rgba(233, 189, 97, .12); }
+    .health.ok { color: #c7f4e7; border-color: rgba(120, 212, 208, .35); }
+    .health.ok .health-dot { background: var(--cyan); box-shadow: 0 0 0 3px rgba(120, 212, 208, .14); }
+    .health.error { color: var(--danger); border-color: rgba(255, 154, 142, .42); }
+    .health.error .health-dot { background: var(--danger); }
+    .health-button { border: 0; padding: 0; color: inherit; background: transparent; font-size: inherit; }
+    .hero { padding: 40px 0 26px; max-width: 730px; }
+    .eyebrow, .section-kicker { margin: 0 0 10px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 16px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(42px, 11vw, 82px); line-height: .94; letter-spacing: -.045em; font-weight: 500; }
+    .hero-copy { max-width: 640px; margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .view { display: none; animation: rise .24s ease both; }
+    .view.active { display: block; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .workspace { display: grid; gap: 16px; align-items: start; }
+    .card { border: 1px solid var(--line); border-radius: 20px; background: linear-gradient(145deg, rgba(17, 32, 52, .97), rgba(10, 23, 39, .94)); box-shadow: var(--shadow); }
+    .form-card, .output-card, .consult-card, .map-card { padding: 19px; }
+    .section-heading { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 21px; }
+    .section-heading h2 { margin-bottom: 5px; font-size: 18px; letter-spacing: -.02em; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .step-number { color: var(--gold); font-family: Georgia, serif; font-size: 22px; }
+    label { display: block; margin: 16px 0 7px; color: #dce7f2; font-size: 12px; font-weight: 700; }
     .required { color: var(--gold); }
-    label { display: block; margin: 16px 0 8px; color: #dce7f6; font-size: .88rem; font-weight: 700; }
-    input {
-      width: 100%; border: 1px solid var(--line); border-radius: 13px; outline: none; padding: 14px 15px;
-      color: var(--ink); background: rgba(4, 12, 23, .6); transition: border-color .2s, box-shadow .2s;
-    }
-    input::placeholder { color: #637894; }
-    input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(129,184,255,.12); }
-    input.invalid { border-color: var(--red); }
-    .field-hint { margin: 7px 0 0; color: var(--muted); font-size: .77rem; }
-    .actions { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
-    .primary, .secondary {
-      min-height: 48px; border-radius: 13px; padding: 12px 16px; font-weight: 800; transition: transform .2s, opacity .2s, background .2s;
-    }
-    .primary { flex: 1; border: 1px solid #f1ca7e; color: #1e1609; background: linear-gradient(135deg, #f0cb83, #d49a48); box-shadow: 0 10px 28px rgba(213,151,70,.18); }
-    .primary:hover { transform: translateY(-1px); }
-    .primary:disabled { cursor: wait; opacity: .62; transform: none; }
-    .secondary { border: 1px solid var(--line); color: var(--ink); background: rgba(255,255,255,.04); }
-    .secondary:hover { background: rgba(255,255,255,.08); }
-    .loading { display: none; margin-top: 16px; border: 1px solid rgba(233,189,112,.26); border-radius: 14px; padding: 13px; background: rgba(233,189,112,.08); }
-    .loading.show { display: block; }
-    .loading-row { display: flex; align-items: center; gap: 10px; color: #f4d79f; font-size: .86rem; font-weight: 700; }
-    .spinner { width: 16px; height: 16px; border: 2px solid rgba(244,215,159,.3); border-top-color: var(--gold); border-radius: 50%; animation: spin .9s linear infinite; }
-    .loading small { display: block; margin: 7px 0 0 26px; color: var(--muted); }
+    input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 12px; outline: 0; color: var(--text); background: rgba(4, 14, 26, .64); transition: border-color .2s, box-shadow .2s; }
+    input { min-height: 46px; padding: 12px 13px; }
+    textarea { min-height: 90px; resize: vertical; padding: 12px 13px; line-height: 1.55; }
+    input:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(233, 189, 97, .12); }
+    input:disabled, textarea:disabled { color: #8091a6; background: rgba(4, 14, 26, .36); }
+    input.invalid, textarea.invalid { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(255, 154, 142, .1); }
+    .field-hint { margin: 6px 0 0; color: #7f93a9; font-size: 10px; line-height: 1.45; }
+    .mode-switch, .subtabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: rgba(3, 12, 23, .44); }
+    .mode-button, .tab-button { border: 0; border-radius: 8px; padding: 10px; color: var(--muted); background: transparent; font-size: 11px; font-weight: 800; letter-spacing: .07em; }
+    .mode-button.active, .tab-button.active { color: #111c2d; background: var(--gold); }
+    .mode-copy { min-height: 44px; margin: 12px 0 0; padding: 10px 11px; border-left: 2px solid var(--gold); color: var(--muted); background: rgba(233, 189, 97, .06); font-size: 11px; line-height: 1.5; }
+    .mode-copy strong { color: var(--gold-soft); }
+    .grid-two { display: grid; grid-template-columns: 1fr; gap: 11px; }
+    .number-row { display: flex; gap: 8px; }
+    .number-row input { min-width: 0; }
+    .small-action { flex: 0 0 auto; border: 1px solid var(--line-strong); border-radius: 11px; padding: 0 11px; color: var(--gold-soft); background: rgba(233, 189, 97, .08); font-size: 10px; font-weight: 800; }
+    .image-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    .file-button { display: grid; place-items: center; min-height: 43px; border: 1px dashed var(--line-strong); border-radius: 11px; color: var(--muted); background: rgba(4, 14, 26, .35); font-size: 10px; font-weight: 700; text-align: center; }
+    .file-button input { display: none; }
+    .image-preview { display: none; margin-top: 10px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .image-preview.show { display: block; }
+    .image-preview img { display: block; width: 100%; max-height: 190px; object-fit: cover; }
+    .image-caption { margin: 0; padding: 8px 10px; color: var(--muted); font-size: 10px; }
+    .actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 21px; }
+    .primary, .secondary { min-height: 46px; border-radius: 12px; font-size: 11px; font-weight: 900; letter-spacing: .06em; }
+    .primary { border: 1px solid #f5ce79; color: #162238; background: linear-gradient(135deg, var(--gold-soft), var(--gold)); box-shadow: 0 10px 28px rgba(233, 189, 97, .16); }
+    .secondary { border: 1px solid var(--line-strong); padding: 0 14px; color: var(--gold-soft); background: rgba(233, 189, 97, .07); }
+    .loading, .error { display: none; margin-top: 13px; border-radius: 12px; padding: 12px; }
+    .loading.show, .error.show { display: block; }
+    .loading { border: 1px solid rgba(120, 212, 208, .25); color: #c7f4e7; background: rgba(120, 212, 208, .07); }
+    .loading-row { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; }
+    .loading small { display: block; margin-top: 8px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .spinner { width: 12px; height: 12px; flex: 0 0 auto; border: 2px solid rgba(199, 244, 231, .27); border-top-color: var(--cyan); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .error { display: none; margin-top: 16px; border: 1px solid rgba(255,140,140,.32); border-radius: 14px; padding: 13px; color: #ffc0c0; background: rgba(255,80,80,.08); }
-    .error.show { display: block; }
-    .error strong { display: block; margin-bottom: 3px; }
-    .output-card { display: none; padding: 20px; }
-    .output-card.show { display: block; }
-    .output-card h2 { margin: 0; font-size: 1.12rem; }
-    .output-card > p { margin: 4px 0 18px; color: var(--muted); font-size: .84rem; }
-    .summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    .metric { min-height: 82px; border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: rgba(255,255,255,.035); }
-    .metric-label { color: var(--muted); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
-    .metric-value { margin-top: 5px; color: var(--gold); font-size: 1rem; font-weight: 800; overflow-wrap: anywhere; }
-    .metric-value.small { color: var(--ink); font-size: .86rem; line-height: 1.35; }
-    .interpretation { margin-top: 18px; border: 1px solid rgba(129,184,255,.23); border-radius: 16px; padding: 16px; background: rgba(129,184,255,.07); }
-    .interpretation h3 { margin: 0 0 9px; color: var(--blue); font-size: .86rem; letter-spacing: .08em; text-transform: uppercase; }
-    .interpretation-body { white-space: pre-wrap; color: #e7effa; font-size: .95rem; }
-    details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
-    summary { cursor: pointer; color: var(--muted); font-size: .83rem; font-weight: 700; }
-    pre { margin: 12px 0 0; max-height: 420px; overflow: auto; white-space: pre-wrap; word-break: break-word; color: #c5d6eb; font: .75rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .empty { padding: 24px 0 8px; color: var(--muted); text-align: center; font-size: .86rem; }
-    footer { margin-top: 30px; color: #60748e; text-align: center; font-size: .74rem; }
+    .error { border: 1px solid rgba(255, 154, 142, .35); color: var(--danger); background: rgba(255, 154, 142, .07); font-size: 11px; line-height: 1.5; }
+    .error strong { display: block; margin-bottom: 4px; }
+    .retry-button { margin-top: 9px; border: 1px solid rgba(255, 154, 142, .4); border-radius: 8px; padding: 6px 9px; color: var(--danger); background: transparent; font-size: 10px; font-weight: 800; }
+    .source-note { margin: 10px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .result-empty { padding: 26px 4px; color: var(--muted); line-height: 1.6; }
+    .result-empty strong { display: block; margin-bottom: 7px; color: var(--text); font-size: 17px; }
+    .result-block + .result-block { margin-top: 18px; }
+    .result-title { margin: 0 0 11px; color: var(--gold); font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .result-title span { color: var(--muted); font-weight: 500; letter-spacing: 0; text-transform: none; }
+    .input-confirmation, .summary, .direct-grid, .map-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .info-tile, .metric, .direct-answer, .map-stat, .availability, .timeline-item { border: 1px solid var(--line); border-radius: 13px; padding: 11px; background: rgba(4, 14, 26, .38); }
+    .info-label, .metric-label, .map-label { margin-bottom: 6px; color: #7f93a9; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .info-value, .metric-value, .map-value { color: var(--text); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+    .metric-value { color: var(--gold-soft); font-weight: 800; }
+    .metric-value.small { font-size: 10px; }
+    .direct-grid { grid-template-columns: 1fr; }
+    .direct-answer { border-color: rgba(233, 189, 97, .28); background: linear-gradient(135deg, rgba(233, 189, 97, .12), rgba(4, 14, 26, .42)); }
+    .direct-answer .answer-label { margin-bottom: 6px; color: var(--gold); font-size: 10px; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+    .direct-answer .answer-value { color: var(--text); font-size: 14px; line-height: 1.5; }
+    .direct-answer .answer-value strong { color: var(--gold-soft); }
+    .interpretation { margin-top: 15px; border: 1px solid rgba(120, 212, 208, .2); border-radius: 15px; padding: 14px; background: rgba(120, 212, 208, .05); }
+    .interpretation h3 { margin-bottom: 9px; color: var(--cyan); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+    .interpretation-body { color: #dce7f2; font-size: 12px; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; }
+    details { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 14px; }
+    summary { cursor: pointer; color: var(--gold-soft); font-size: 11px; font-weight: 800; }
+    pre { max-height: 440px; overflow: auto; margin: 12px 0 0; border: 1px solid var(--line); border-radius: 12px; padding: 12px; color: #c8d7e6; background: #050d18; font-size: 10px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .availability { color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .availability strong { display: block; margin-bottom: 5px; color: var(--gold-soft); }
+    .line-list { display: grid; gap: 8px; }
+    .line-list details { margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: rgba(4, 14, 26, .38); }
+    .line-list summary { padding: 12px; list-style-position: inside; }
+    .line-content { border-top: 1px solid var(--line); padding: 11px 12px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .timeline { display: grid; gap: 8px; }
+    .timeline-item { position: relative; padding-left: 16px; }
+    .timeline-item::before { position: absolute; top: 14px; left: 8px; width: 4px; height: 4px; border-radius: 50%; content: ""; background: var(--gold); }
+    .timeline-title { margin-bottom: 5px; color: var(--gold-soft); font-size: 11px; font-weight: 800; }
+    .timeline-text { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .consult-layout { display: grid; gap: 14px; }
+    .session-context { border: 1px solid rgba(120, 212, 208, .2); border-radius: 14px; padding: 12px; color: var(--muted); background: rgba(120, 212, 208, .05); font-size: 11px; line-height: 1.55; }
+    .session-context strong { color: var(--cyan); }
+    .chat-history { display: grid; gap: 9px; min-height: 100px; max-height: 55vh; overflow: auto; padding-right: 2px; }
+    .chat-empty { padding: 26px 8px; color: var(--muted); font-size: 12px; line-height: 1.6; text-align: center; }
+    .bubble { max-width: 92%; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; font-size: 12px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .bubble.user { justify-self: end; border-color: rgba(233, 189, 97, .25); color: var(--gold-soft); background: rgba(233, 189, 97, .09); }
+    .bubble.assistant { justify-self: start; color: #dce7f2; background: rgba(4, 14, 26, .42); }
+    .bubble.pending { opacity: .7; }
+    .consult-form { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+    .consult-form textarea { min-height: 56px; }
+    .consult-form .primary { padding: 0 14px; }
+    .map-shell { min-height: 240px; display: grid; place-items: center; border: 1px solid rgba(120, 212, 208, .23); border-radius: 17px; overflow: hidden; background: radial-gradient(circle at 50% 50%, rgba(120, 212, 208, .2) 0 2px, transparent 3px), linear-gradient(135deg, rgba(13, 62, 80, .42), rgba(4, 14, 26, .72)); background-size: 42px 42px, auto; }
+    .map-placeholder { padding: 22px; text-align: center; }
+    .map-marker { display: grid; place-items: center; width: 52px; height: 52px; margin: 0 auto 12px; border: 1px solid var(--cyan); border-radius: 50%; color: var(--cyan); background: rgba(120, 212, 208, .15); box-shadow: 0 0 0 13px rgba(120, 212, 208, .05), 0 0 0 26px rgba(120, 212, 208, .03); }
+    .map-placeholder strong { display: block; color: var(--text); font-size: 14px; }
+    .map-placeholder p { max-width: 360px; margin: 7px auto 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .map-note { margin-top: 10px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .floating-bubble { display: none; position: fixed; right: 18px; bottom: 91px; z-index: 5; width: 48px; height: 48px; border: 1px solid var(--gold-soft); border-radius: 50%; color: #162238; background: var(--gold); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); font-size: 19px; }
+    .floating-bubble.show { display: block; }
+    .bottom-nav { position: fixed; right: 0; bottom: 0; left: 0; z-index: 4; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; padding: 8px max(10px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-bottom)); border-top: 1px solid rgba(164, 190, 222, .15); background: rgba(5, 14, 26, .93); backdrop-filter: blur(18px); }
+    .nav-button { display: grid; gap: 4px; justify-items: center; border: 0; border-radius: 11px; padding: 7px 3px; color: var(--muted); background: transparent; font-size: 9px; font-weight: 800; letter-spacing: .05em; }
+    .nav-icon { color: inherit; font-size: 17px; line-height: 1; }
+    .nav-button.active { color: var(--gold-soft); background: rgba(233, 189, 97, .12); }
+    .footer { margin-top: 28px; color: #6f849a; font-size: 10px; line-height: 1.5; text-align: center; }
+    .hidden { display: none !important; }
 
-    @media (min-width: 720px) {
-      .shell { padding-top: 34px; }
-      .form-card, .output-card { padding: 28px; }
-      .grid { grid-template-columns: minmax(310px, .8fr) minmax(0, 1.2fr); align-items: start; }
-      .summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (min-width: 700px) {
+      .app { padding: 24px 28px 48px; }
+      .hero { padding-top: 62px; }
+      .workspace { grid-template-columns: minmax(310px, .7fr) minmax(0, 1.3fr); }
+      .grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .direct-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .input-confirmation { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .map-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 1080px) {
+      .app-shell { padding-bottom: 32px; }
+      .app { padding-left: 122px; }
+      .bottom-nav { top: 50%; right: auto; bottom: auto; left: max(18px, calc((100vw - 1180px) / 2)); display: flex; width: 78px; transform: translateY(-50%); flex-direction: column; border: 1px solid var(--line); border-radius: 18px; padding: 8px; }
+      .floating-bubble { right: 28px; bottom: 28px; }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">DD</div>
-        <div><p class="brand-name">DUYÊN DỊCH</p><p class="brand-sub">DCGF · FIELD INTERFACE</p></div>
-      </div>
-      <div id="health-badge" class="health" role="status" aria-live="polite"><span class="health-dot"></span><span id="health-text">Đang kiểm tra hệ thống</span></div>
-    </header>
+  <div class="app-shell">
+    <main class="app">
+      <header class="topbar">
+        <div class="brand"><div class="brand-mark" aria-hidden="true">DD</div><div><p class="brand-name">DUYÊN DỊCH</p><p class="brand-sub">DCGF · FIELD APP</p></div></div>
+        <button id="health-button" class="health" type="button" role="status" aria-live="polite"><span class="health-dot"></span><span id="health-text">Đang kiểm tra hệ thống</span></button>
+      </header>
 
-    <section class="hero" aria-labelledby="page-title">
-      <p class="eyebrow">Một tín hiệu · Một lần quan sát</p>
-      <h1 id="page-title">Đọc thế và hướng<br>của câu hỏi.</h1>
-      <p class="hero-copy">Nhập câu hỏi cùng một chuỗi sáu chữ số. Engine sẽ dựng báo cáo S12, sau đó lớp AI diễn giải kết quả theo ngữ cảnh bạn cung cấp.</p>
-    </section>
-
-    <section class="grid">
-      <form id="analysis-form" class="card form-card" novalidate>
-        <div class="section-heading">
-          <div><h2>Khởi tạo phiên phân tích</h2><p>Hai trường đều bắt buộc.</p></div>
-          <span class="required">01</span>
-        </div>
-
-        <label for="question">Câu hỏi <span class="required">*</span></label>
-        <input id="question" name="question" type="text" autocomplete="off" placeholder="Ví dụ: tình cảm, công việc, quyết định..." required>
-        <p class="field-hint">Viết ngắn gọn điều bạn đang muốn quan sát.</p>
-
-        <label for="signal">6 chữ số <span class="required">*</span></label>
-        <input id="signal" name="signal" type="text" inputmode="numeric" autocomplete="off" maxlength="6" pattern="[0-9]{6}" placeholder="Ví dụ: 369147" required>
-        <p class="field-hint">Một tín hiệu gồm đúng sáu chữ số, không có khoảng trắng.</p>
-
-        <div class="actions">
-          <button id="submit-button" class="primary" type="submit">GIEO QUẺ / PHÂN TÍCH</button>
-          <button id="health-button" class="secondary" type="button">Kiểm tra</button>
-        </div>
-
-        <div id="loading" class="loading" role="status" aria-live="polite">
-          <div class="loading-row"><span class="spinner" aria-hidden="true"></span><span id="loading-title">Engine đang tính và AI đang diễn giải...</span></div>
-          <small id="loading-detail">Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.</small>
-        </div>
-        <div id="error" class="error" role="alert"><strong>Không thể hoàn tất phân tích.</strong><span id="error-text"></span></div>
-      </form>
-
-      <section id="output-card" class="card output-card" aria-live="polite" aria-labelledby="output-title">
-        <h2 id="output-title">Kết quả phiên phân tích</h2>
-        <p>Engine Output được giữ nguyên từ API; các chỉ số chính được tóm tắt để đọc nhanh trên điện thoại.</p>
-        <div id="summary" class="summary"></div>
-        <div class="interpretation">
-          <h3>AI Interpretation</h3>
-          <div id="interpretation" class="interpretation-body">Chưa có diễn giải.</div>
-        </div>
-        <details>
-          <summary>Xem Engine Output đầy đủ</summary>
-          <pre id="raw-output">{}</pre>
-        </details>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Một tín hiệu · Một lần quan sát</p>
+        <h1 id="page-title">Đọc thế và hướng<br>của câu hỏi.</h1>
+        <p class="hero-copy">Một phiên Duyên Dịch đi qua bốn lớp: nhập tín hiệu, đọc kết quả, tư vấn theo context hiện tại và quan sát dữ liệu vị trí.</p>
       </section>
-    </section>
 
-    <div id="empty-state" class="empty">Chưa có kết quả. Hãy bắt đầu bằng một câu hỏi rõ ràng.</div>
-    <footer>DUYÊN DỊCH / DCGF · Kết quả là một khung quan sát, không phải dự đoán tất định.</footer>
-  </main>
+      <section id="view-input" class="view active" aria-labelledby="input-title">
+        <div class="workspace">
+          <form id="analysis-form" class="card form-card" novalidate>
+            <div class="section-heading"><div><p class="section-kicker">01 · Input</p><h2 id="input-title">Khởi tạo phiên</h2><p>Giữ lại toàn bộ dữ liệu để truy vết và retry.</p></div><span class="step-number">01</span></div>
+            <div class="mode-switch" role="tablist" aria-label="Chế độ nhập"><button id="auto-mode" class="mode-button active" type="button" data-mode="auto">AUTO</button><button id="manual-mode" class="mode-button" type="button" data-mode="manual">NHẬP TAY</button></div>
+            <div id="mode-copy" class="mode-copy"><strong>AUTO</strong> tự lấy ngày, giờ và GPS bằng quyền của trình duyệt. Địa chỉ chỉ hiển thị nếu có provider geocoding; không tự suy diễn.</div>
+            <div class="grid-two">
+              <div><label for="date">Date</label><input id="date" type="date" disabled></div>
+              <div><label for="time">Time</label><input id="time" type="time" disabled></div>
+            </div>
+            <label for="address">Address</label><input id="address" type="text" placeholder="Địa chỉ hoặc ghi chú vị trí" disabled>
+            <p id="location-note" class="field-hint">Đang chuẩn bị dữ liệu thiết bị.</p>
+            <div class="grid-two">
+              <div><label for="latitude">GPS latitude</label><input id="latitude" type="text" placeholder="Chưa có GPS" disabled></div>
+              <div><label for="longitude">GPS longitude</label><input id="longitude" type="text" placeholder="Chưa có GPS" disabled></div>
+            </div>
+            <label for="signal">Random number 6 digit <span class="required">*</span></label>
+            <div class="number-row"><input id="signal" type="text" inputmode="numeric" autocomplete="off" maxlength="6" pattern="[0-9]{6}" placeholder="Ví dụ: 369147" required><button id="random-button" class="small-action" type="button">TẠO SỐ</button></div>
+            <p class="field-hint">Đúng sáu chữ số. Có thể nhập tay hoặc tạo số ngẫu nhiên.</p>
+            <label for="question">Câu hỏi <span class="required">*</span></label><textarea id="question" placeholder="Ví dụ: tình cảm, công việc, quyết định..." required></textarea>
+            <p class="field-hint">Câu hỏi là dữ liệu bắt buộc và sẽ được gửi tới lớp AI diễn giải.</p>
+            <label for="supplement">Bổ sung <span class="field-hint" style="display:inline">(không bắt buộc)</span></label><textarea id="supplement" placeholder="Bối cảnh thêm cho phiên này, nếu có."></textarea>
+            <div class="image-tools"><label class="file-button">CAMERA<input id="camera-input" type="file" accept="image/*" capture="environment"></label><label class="file-button">UPLOAD ẢNH<input id="image-input" type="file" accept="image/*"></label></div>
+            <div id="image-preview" class="image-preview"><img id="preview-image" alt="Ảnh đã chọn"><p id="image-caption" class="image-caption"></p></div>
+            <p class="source-note">Backend hiện đã kiểm chứng payload tối thiểu <code>mode / total / question</code>. Các trường thiết bị và ảnh được giữ trong phiên UI; không gửi schema chưa được backend công bố.</p>
+            <div class="actions"><button id="submit-button" class="primary" type="submit">GIEO QUẺ / PHÂN TÍCH</button><button id="input-health-button" class="secondary" type="button">Health</button></div>
+            <div id="loading" class="loading" role="status" aria-live="polite"><div class="loading-row"><span class="spinner" aria-hidden="true"></span><span id="loading-title">Engine đang tính và AI đang diễn giải...</span></div><small id="loading-detail">Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.</small></div>
+            <div id="error" class="error" role="alert"><strong>Không thể hoàn tất phân tích.</strong><span id="error-text"></span><button id="retry-button" class="retry-button" type="button">THỬ LẠI</button></div>
+          </form>
+          <div class="card form-card"><p class="section-kicker">Session</p><h2>Truy vết phiên</h2><div id="input-session-summary" class="availability"><strong>Chưa có dữ liệu</strong>Sau khi gieo quẻ, các trường input sẽ được xác nhận trong màn hình Kết quả.</div></div>
+        </div>
+      </section>
+
+      <section id="view-result" class="view" aria-labelledby="result-title"><div id="result-empty" class="card output-card result-empty"><strong>Chưa có kết quả phiên.</strong>Hãy sang <button class="small-action" data-go="input" type="button">INPUT</button> và bắt đầu bằng một câu hỏi rõ ràng.</div><div id="result-content" class="card output-card hidden"><p class="section-kicker">02 · Result</p><h2 id="result-title">Kết quả + diễn giải</h2><p class="source-note">Các trường dưới đây lấy từ Engine Output thật; trường nào Core Engine chưa phát sẽ được đánh dấu rõ ràng.</p><section class="result-block"><h3 class="result-title">A — Xác nhận <span>input đã sử dụng</span></h3><div id="input-confirmation" class="input-confirmation"></div></section><section class="result-block"><h3 class="result-title">B — Câu trả lời trực tiếp <span>từ Engine</span></h3><div id="direct-answer" class="direct-grid"></div></section><section class="result-block"><h3 class="result-title">Quẻ <span>gốc và biến</span></h3><div id="summary" class="summary"></div></section><section class="result-block"><h3 class="result-title">C — Lục hào <span>Hào 1 → Hào 6</span></h3><div id="six-lines" class="line-list"></div></section><section class="result-block"><h3 class="result-title">D — Highlights <span>ứng kỳ → cảnh báo → đề xuất</span></h3><div id="highlights" class="timeline"></div></section><section class="result-block"><h3 class="result-title">E — Luận</h3><div class="subtabs"><button class="tab-button active" type="button" data-tab="luc-hao">LỤC HÀO</button><button class="tab-button" type="button" data-tab="nxn">NxN</button></div><div id="tab-luc-hao" class="availability" style="margin-top:10px"></div><div id="tab-nxn" class="availability hidden" style="margin-top:10px"></div></section><section class="result-block"><h3 class="result-title">F — Tổng kết</h3><div id="summary-conclusion" class="availability"></div></section><section class="interpretation"><h3>AI Interpretation</h3><div id="interpretation" class="interpretation-body">Chưa có diễn giải.</div></section><details><summary>Xem Engine Output đầy đủ</summary><pre id="raw-output">{}</pre></details></div></section>
+
+      <section id="view-consult" class="view" aria-labelledby="consult-title"><div class="card consult-card"><p class="section-kicker">03 · Tư vấn realtime</p><h2 id="consult-title">Hỏi tiếp trong cùng phiên</h2><p class="source-note">Không gieo lại quẻ. Mỗi câu hỏi gửi context của kết quả hiện tại, input và lịch sử hội thoại tới <code>/api/ai</code>.</p><div id="session-context" class="session-context"></div><div id="chat-history" class="chat-history"></div><form id="consult-form" class="consult-form"><textarea id="consult-question" placeholder="Ví dụ: Tôi nên ưu tiên điều gì trong bước tiếp theo?" aria-label="Câu hỏi tư vấn mới"></textarea><button id="consult-send" class="primary" type="submit">GỬI</button></form><div id="consult-loading" class="loading"><div class="loading-row"><span class="spinner" aria-hidden="true"></span><span>AI đang đọc context phiên...</span></div><small>Có thể mất tới 120 giây. Nội dung câu hỏi vẫn được giữ lại khi lỗi.</small></div><div id="consult-error" class="error"><strong>Tư vấn chưa hoàn tất.</strong><span id="consult-error-text"></span><button id="consult-retry" class="retry-button" type="button">THỬ LẠI</button></div></div></section>
+
+      <section id="view-map" class="view" aria-labelledby="map-title"><div class="card map-card"><p class="section-kicker">04 · Map ứng dụng</p><h2 id="map-title">Vị trí và trường Khí</h2><p class="source-note">Đây là màn hình map riêng. Không có map provider/key trong backend hiện tại nên chỉ hiển thị placeholder và GPS thật nếu trình duyệt cấp quyền.</p><div id="map-shell" class="map-shell"><div class="map-placeholder"><div class="map-marker">◎</div><strong id="map-status">Chưa có vị trí</strong><p id="map-description">Bật AUTO ở INPUT và cấp quyền định vị để hiển thị marker theo GPS thiết bị.</p></div></div><div class="map-stats"><div class="map-stat"><div class="map-label">GPS</div><div id="map-gps" class="map-value">Chưa có dữ liệu</div></div><div class="map-stat"><div class="map-label">Hướng nội bộ D</div><div id="map-direction" class="map-value">Chưa có Engine</div></div><div class="map-stat"><div class="map-label">Khí S07 / S</div><div id="map-s07" class="map-value">Chưa có Engine</div></div><div class="map-stat"><div class="map-label">Góc / phương vị</div><div id="map-angle" class="map-value">Core Engine chưa phát dữ liệu</div></div><div class="map-stat"><div class="map-label">Cảnh báo</div><div id="map-warning" class="map-value">Core Engine chưa phát dữ liệu</div></div><div class="map-stat"><div class="map-label">Hóa giải</div><div id="map-remedy" class="map-value">Core Engine chưa phát dữ liệu</div></div></div><p class="map-note">Lưu ý: D là scalar hướng nội bộ của Engine, không phải phương vị địa lý. Không suy diễn hướng, góc hoặc cảnh báo ngoài dữ liệu backend.</p></div></section>
+
+      <p class="footer">DUYÊN DỊCH / DCGF · Kết quả là một khung quan sát, không phải dự đoán tất định.</p>
+    </main>
+    <button id="consult-bubble" class="floating-bubble" type="button" aria-label="Mở tư vấn realtime">💬</button>
+    <nav class="bottom-nav" aria-label="Điều hướng chính"><button class="nav-button active" data-view="input" type="button"><span class="nav-icon">⌂</span>INPUT</button><button class="nav-button" data-view="result" type="button"><span class="nav-icon">◈</span>KẾT QUẢ</button><button class="nav-button" data-view="consult" type="button"><span class="nav-icon">✦</span>TƯ VẤN</button><button class="nav-button" data-view="map" type="button"><span class="nav-icon">⌖</span>MAP</button></nav>
+  </div>
 
   <script>
-    const form = document.getElementById('analysis-form');
-    const questionInput = document.getElementById('question');
-    const signalInput = document.getElementById('signal');
-    const submitButton = document.getElementById('submit-button');
-    const healthButton = document.getElementById('health-button');
-    const healthBadge = document.getElementById('health-badge');
-    const healthText = document.getElementById('health-text');
-    const loading = document.getElementById('loading');
-    const loadingTitle = document.getElementById('loading-title');
-    const loadingDetail = document.getElementById('loading-detail');
-    const errorBox = document.getElementById('error');
-    const errorText = document.getElementById('error-text');
-    const outputCard = document.getElementById('output-card');
-    const emptyState = document.getElementById('empty-state');
-    const summary = document.getElementById('summary');
-    const interpretation = document.getElementById('interpretation');
-    const rawOutput = document.getElementById('raw-output');
-    let lastPayload = null;
+    const $ = id => document.getElementById(id);
+    const state = { mode: 'auto', input: null, analysis: null, consultation: [], consultationBusy: false, lastConsultQuestion: '', imageUrl: null, imageName: '', coordinates: null };
     let loadingTimer = null;
-    let timeoutTimer = null;
+    let analysisAbortTimer = null;
+    let consultAbortTimer = null;
 
     const text = (value, fallback = '—') => value === undefined || value === null || value === '' ? fallback : String(value);
-    const jsonText = value => {
-      if (value === undefined || value === null) return '—';
-      if (typeof value === 'string') return value;
-      try { return JSON.stringify(value); } catch (_) { return String(value); }
-    };
     const nested = (object, path, fallback = undefined) => path.reduce((current, key) => current && current[key] !== undefined ? current[key] : undefined, object) ?? fallback;
+    const jsonText = (value, fallback = '—') => value === undefined || value === null ? fallback : typeof value === 'string' ? value : JSON.stringify(value);
+    const escapeHtml = value => text(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[char]);
 
-    function setHealth(kind, label) {
-      healthBadge.className = `health ${kind || ''}`.trim();
-      healthText.textContent = label;
-    }
-
+    function setHealth(kind, label) { $('health-button').className = `health ${kind || ''}`.trim(); $('health-text').textContent = label; }
     async function getJson(url, options = {}) {
       const response = await fetch(url, { cache: 'no-store', ...options });
-      let data;
-      try { data = await response.json(); } catch (_) { data = { error: `Phản hồi không phải JSON (HTTP ${response.status}).` }; }
-      if (!response.ok) {
-        const failure = new Error(data.error || `Yêu cầu thất bại (HTTP ${response.status}).`);
-        failure.status = response.status;
-        throw failure;
-      }
+      let data; try { data = await response.json(); } catch (_) { data = { error: `Phản hồi không phải JSON (HTTP ${response.status}).` }; }
+      if (!response.ok) { const failure = new Error(data.error || `Yêu cầu thất bại (HTTP ${response.status}).`); failure.status = response.status; throw failure; }
       return { response, data };
     }
-
     async function checkHealth() {
       setHealth('', 'Đang kiểm tra hệ thống');
-      try {
-        const { data } = await getJson('/health');
-        const model = data.gemini_model ? ` · ${data.gemini_model}` : '';
-        setHealth('ok', `Hệ thống sẵn sàng${model}`);
-      } catch (failure) {
-        setHealth('error', `Health lỗi${failure.status ? ` · ${failure.status}` : ''}`);
-      }
+      try { const { data } = await getJson('/health'); setHealth('ok', `Sẵn sàng · ${data.gemini_model || 'Engine'}`); }
+      catch (failure) { setHealth('error', `Health lỗi${failure.status ? ` · ${failure.status}` : ''}`); }
     }
 
-    function setBusy(isBusy) {
-      submitButton.disabled = isBusy;
-      healthButton.disabled = isBusy;
-      questionInput.disabled = isBusy;
-      signalInput.disabled = isBusy;
-      loading.classList.toggle('show', isBusy);
-      if (!isBusy) {
-        clearInterval(loadingTimer);
-        clearTimeout(timeoutTimer);
-      }
+    function setView(view) {
+      document.querySelectorAll('.view').forEach(element => element.classList.toggle('active', element.id === `view-${view}`));
+      document.querySelectorAll('.nav-button').forEach(button => button.classList.toggle('active', button.dataset.view === view));
+      $('consult-bubble').classList.toggle('show', view === 'result' && !!state.analysis);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (view === 'result') renderResult();
+      if (view === 'consult') renderConsult();
+      if (view === 'map') renderMap();
     }
 
-    function showError(message) {
-      errorText.textContent = message;
-      errorBox.classList.add('show');
+    function setMode(mode) {
+      state.mode = mode;
+      $('auto-mode').classList.toggle('active', mode === 'auto'); $('manual-mode').classList.toggle('active', mode === 'manual');
+      const auto = mode === 'auto';
+      ['date', 'time', 'address', 'latitude', 'longitude'].forEach(id => { $(id).disabled = auto; });
+      $('mode-copy').innerHTML = auto ? '<strong>AUTO</strong> tự lấy ngày, giờ và GPS bằng quyền của trình duyệt. Địa chỉ chỉ hiển thị nếu có provider geocoding; không tự suy diễn.' : '<strong>NHẬP TAY</strong> nhập ngày, giờ và địa chỉ theo dữ liệu bạn muốn lưu cùng phiên. GPS chỉ lấy khi AUTO được bật.';
+      if (auto) collectDeviceData();
     }
-
-    function hideError() { errorBox.classList.remove('show'); }
-
-    function validate() {
-      const question = questionInput.value.trim();
-      const signal = signalInput.value.trim();
-      questionInput.classList.toggle('invalid', !question);
-      signalInput.classList.toggle('invalid', !/^\d{6}$/.test(signal));
+    function collectDeviceData() {
+      const now = new Date();
+      $('date').value = now.toISOString().slice(0, 10);
+      $('time').value = now.toTimeString().slice(0, 5);
+      $('address').value = '';
+      $('location-note').textContent = 'Đang xin quyền GPS từ trình duyệt; địa chỉ cần provider geocoding nên không tự suy diễn.';
+      if (!navigator.geolocation) { $('location-note').textContent = 'Trình duyệt không hỗ trợ GPS. Bạn có thể chuyển sang NHẬP TAY.'; return; }
+      navigator.geolocation.getCurrentPosition(position => {
+        state.coordinates = { latitude: position.coords.latitude, longitude: position.coords.longitude };
+        $('latitude').value = state.coordinates.latitude.toFixed(6); $('longitude').value = state.coordinates.longitude.toFixed(6);
+        $('location-note').textContent = 'GPS đã lấy từ thiết bị. Address chưa có provider geocoding trong project.';
+        renderMap();
+      }, () => { state.coordinates = null; $('location-note').textContent = 'Chưa lấy được GPS hoặc quyền bị từ chối. Dữ liệu Engine vẫn dùng payload tối thiểu.'; renderMap(); }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 });
+    }
+    function randomSignal() { $('signal').value = String(Math.floor(100000 + Math.random() * 900000)); }
+    function validateInput() {
+      const question = $('question').value.trim(); const signal = $('signal').value.trim();
+      $('question').classList.toggle('invalid', !question); $('signal').classList.toggle('invalid', !/^\d{6}$/.test(signal));
       if (!question) return 'Vui lòng nhập câu hỏi.';
       if (!/^\d{6}$/.test(signal)) return '6 chữ số phải gồm đúng sáu ký tự số, ví dụ 369147.';
       return null;
     }
-
-    function metric(label, value, small = false) {
-      return `<div class="metric"><div class="metric-label">${label}</div><div class="metric-value${small ? ' small' : ''}">${value}</div></div>`;
+    function collectInput() {
+      return { mode: state.mode, date: $('date').value || '', time: $('time').value || '', address: $('address').value.trim(), latitude: $('latitude').value || '', longitude: $('longitude').value || '', total: Number($('signal').value), question: $('question').value.trim(), supplement: $('supplement').value.trim(), image_name: state.imageName || '' };
     }
-
-    function renderResult(data) {
-      const report = data.engine_output || {};
-      const technical = report['1_phan_tich_ky_thuat'] || {};
-      const hexagrams = technical.ma_que || {};
-      const mainHex = hexagrams.que_chu || {};
-      const changedHex = hexagrams.que_bien || {};
-      const dynamics = report['2_dong_luc_hoc'] || {};
-      const progress = report['3_tien_trinh_van_hanh'] || {};
-      const trend = progress.xu_huong || {};
-      const expression = progress.bieu_hien || {};
-
-      summary.innerHTML = [
-        metric('Quẻ chủ', text(mainHex.ten_que), true),
-        metric('Quẻ biến', text(changedHex.ten_que), true),
-        metric('Hào động', text(mainHex.active_line)),
-        metric('Tin cậy C', text(technical.chi_so_tin_cay_C)),
-        metric('Lực tổng thể F', text(dynamics.luc_tong_the_F)),
-        metric('Vectơ Khí', jsonText(technical.vecto_khi), true),
-        metric('Xu hướng', text(trend.label || trend.dien_giai), true),
-        metric('Biểu hiện', text(expression.label || expression.dien_giai), true)
-      ].join('');
-      interpretation.textContent = text(data.ai_interpretation, 'API chưa trả về phần AI Interpretation.');
-      rawOutput.textContent = JSON.stringify(report, null, 2);
-      outputCard.classList.add('show');
-      emptyState.style.display = 'none';
-      outputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    function buildPayload(input) { return { mode: 'mot_tin_hieu', total: input.total, question: input.question }; }
+    function setBusy(busy) {
+      ['submit-button', 'input-health-button', 'random-button'].forEach(id => $(id).disabled = busy);
+      $('question').disabled = busy; $('signal').disabled = busy; $('supplement').disabled = busy;
+      $('loading').classList.toggle('show', busy);
+      if (!busy) { clearInterval(loadingTimer); clearTimeout(analysisAbortTimer); }
     }
-
+    function showError(message) { $('error-text').textContent = message; $('error').classList.add('show'); }
+    function hideError() { $('error').classList.remove('show'); }
     function startLoadingMessages() {
-      let seconds = 0;
-      loadingTitle.textContent = 'Engine đang tính và AI đang diễn giải...';
-      loadingDetail.textContent = 'Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.';
-      loadingTimer = setInterval(() => {
-        seconds += 5;
-        if (seconds >= 90) loadingTitle.textContent = 'Đang hoàn thiện diễn giải — gần xong...';
-        else if (seconds >= 45) loadingTitle.textContent = 'Engine đã phản hồi, AI đang hoàn thiện phần đọc nghĩa...';
-        loadingDetail.textContent = `Đã chờ khoảng ${seconds} giây. Không đóng trang trong lúc xử lý.`;
-      }, 5000);
+      let seconds = 0; $('loading-title').textContent = 'Engine đang tính và AI đang diễn giải...'; $('loading-detail').textContent = 'Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.';
+      loadingTimer = setInterval(() => { seconds += 5; $('loading-title').textContent = seconds >= 90 ? 'Đang hoàn thiện diễn giải — gần xong...' : seconds >= 45 ? 'Engine đã phản hồi, AI đang hoàn thiện phần đọc nghĩa...' : 'Engine đang tính và AI đang diễn giải...'; $('loading-detail').textContent = `Đã chờ khoảng ${seconds} giây. Không đóng trang trong lúc xử lý.`; }, 5000);
+    }
+
+    function metric(label, value, small = false) { return `<div class="metric"><div class="metric-label">${escapeHtml(label)}</div><div class="metric-value${small ? ' small' : ''}">${escapeHtml(value)}</div></div>`; }
+    function infoTile(label, value) { return `<div class="info-tile"><div class="info-label">${escapeHtml(label)}</div><div class="info-value">${escapeHtml(value)}</div></div>`; }
+    function renderInputSession() {
+      if (!state.input) { $('input-session-summary').innerHTML = '<strong>Chưa có dữ liệu</strong>Sau khi gieo quẻ, các trường input sẽ được xác nhận trong màn hình Kết quả.'; return; }
+      $('input-session-summary').innerHTML = `<strong>${escapeHtml(state.input.question)}</strong>Payload gửi Engine: <code>${escapeHtml(JSON.stringify(buildPayload(state.input)))}</code><br>Thiết bị, bổ sung và ảnh được giữ trong UI session; chưa gửi vì backend chưa công bố schema tương ứng.`;
+    }
+    function getReportParts() {
+      const report = state.analysis?.engine_output || {}; const technical = report['1_phan_tich_ky_thuat'] || {}; const dynamics = report['2_dong_luc_hoc'] || {}; const progress = report['3_tien_trinh_van_hanh'] || {}; const trend = progress.xu_huong || {}; const mainHex = (technical.ma_que || {}).que_chu || {}; const changedHex = (technical.ma_que || {}).que_bien || {};
+      return { report, technical, dynamics, progress, trend, mainHex, changedHex, semantic: report.semantic || {}, macro: report.macro || {} };
+    }
+    function renderResult() {
+      if (!state.analysis) { $('result-empty').classList.remove('hidden'); $('result-content').classList.add('hidden'); return; }
+      $('result-empty').classList.add('hidden'); $('result-content').classList.remove('hidden');
+      const input = state.input || {}; const { report, technical, dynamics, progress, trend, mainHex, changedHex, semantic, macro } = getReportParts();
+      $('input-confirmation').innerHTML = [infoTile('Date / Time', `${input.date || '—'} · ${input.time || '—'}`), infoTile('GPS', input.latitude && input.longitude ? `${input.latitude}, ${input.longitude}` : 'Chưa có GPS'), infoTile('Address', input.address || 'Chưa cung cấp / chưa có geocoding'), infoTile('Random 6 digit', input.total), infoTile('Câu hỏi', input.question), infoTile('Bổ sung', input.supplement || 'Không có'), infoTile('Ảnh', input.image_name || 'Không có'), infoTile('Quẻ gốc → biến', `${mainHex.ten_que || '—'} → ${changedHex.ten_que || '—'}`)].join('');
+      const directConclusion = `${trend.label || trend.dien_giai || 'Engine chưa phát nhãn xu hướng'} · ${mainHex.ten_que || 'quẻ gốc'} → ${changedHex.ten_que || 'quẻ biến'}`;
+      const qualitative = trend.dien_giai || semantic.hien_an || 'Engine chưa phát định tính.';
+      const quantitative = `C = ${text(technical.chi_so_tin_cay_C)} · F = ${text(dynamics.luc_tong_the_F)} · T = ${text(nested(technical, ['vecto_khi', 'T']))}`;
+      const image = macro.dai_tuong || 'Engine chưa phát đại tượng.';
+      const secondary = semantic.s10_conflict_resolution || semantic.tu_hop_tan_ly || 'Engine chưa phát câu trả lời phụ.';
+      $('direct-answer').innerHTML = [infoTile('Kết luận chính', directConclusion), infoTile('Định tính', qualitative), infoTile('Định lượng', quantitative), infoTile('Định tượng', jsonText(image, 'Engine chưa phát đại tượng.')), infoTile('Câu trả lời phụ', jsonText(secondary, 'Engine chưa phát dữ liệu phụ.'))].join('');
+      $('summary').innerHTML = [metric('Quẻ chủ', mainHex.ten_que, true), metric('Quẻ biến', changedHex.ten_que, true), metric('Hào động', mainHex.active_line), metric('Tin cậy C', technical.chi_so_tin_cay_C), metric('Lực tổng thể F', dynamics.luc_tong_the_F), metric('Vectơ Khí', jsonText(technical.vecto_khi), true), metric('Xu hướng', trend.label || trend.dien_giai, true), metric('Biểu hiện', jsonText(progress.bieu_hien), true)].join('');
+      renderLines(report); renderHighlights(report); renderTabs(report); renderSummary(report); $('interpretation').textContent = text(state.analysis.ai_interpretation, 'API chưa trả về phần AI Interpretation.'); $('raw-output').textContent = JSON.stringify(report, null, 2); renderInputSession();
+    }
+    function renderLines(report) {
+      const source = report.luc_hao || report.luc_hao_matrix || report['luc_hao'];
+      if (!source) { $('six-lines').innerHTML = Array.from({ length: 6 }, (_, index) => `<details><summary>Hào ${index + 1}</summary><div class="line-content">Core Engine hiện chưa phát dữ liệu chi tiết cho hào này; không tự tạo Lục thân, Ứng kỳ, Trường sinh hay Khí S07.</div></details>`).join(''); return; }
+      $('six-lines').innerHTML = Array.from({ length: 6 }, (_, index) => { const line = source[index] || source[String(index + 1)]; return `<details><summary>Hào ${index + 1}</summary><div class="line-content">${escapeHtml(jsonText(line, 'Engine chưa phát dữ liệu cho hào này.'))}</div></details>`; }).join('');
+    }
+    function renderHighlights(report) {
+      const source = report.ung_ky || report.highlights || report.timeline;
+      if (!source) { $('highlights').innerHTML = '<div class="availability"><strong>Chưa có timeline Ứng kỳ</strong>Core Engine hiện chưa phát Ứng kỳ, cảnh báo hoặc đề xuất theo timeline.</div>'; return; }
+      const values = Array.isArray(source) ? source : Object.entries(source).map(([key, value]) => ({ key, value }));
+      $('highlights').innerHTML = values.map(item => `<div class="timeline-item"><div class="timeline-title">${escapeHtml(item.key || item.ung_ky || 'Ứng kỳ')}</div><p class="timeline-text">${escapeHtml(jsonText(item.value ?? item, 'Engine chưa phát chi tiết.'))}</p></div>`).join('');
+    }
+    function renderTabs(report) {
+      const luc = report.luc_hao || report.luc_hao_matrix || report['luc_hao']; const nxn = report.nxn || report.NxN || report['nxn'];
+      $('tab-luc-hao').innerHTML = luc ? `<strong>Dữ liệu Lục hào từ Engine.</strong><br>${escapeHtml(jsonText(luc))}` : '<strong>Chưa có dữ liệu Lục hào.</strong> Core Engine hiện chỉ phát quẻ gốc, quẻ biến, hào động và các trường SIE/Khí trong report hiện tại.';
+      $('tab-nxn').innerHTML = nxn ? `<strong>Dữ liệu NxN từ Engine.</strong><br>${escapeHtml(jsonText(nxn))}` : '<strong>Chưa có dữ liệu NxN.</strong> Không tự tạo kết quả NxN khi backend chưa cung cấp.';
+    }
+    function renderSummary(report) {
+      const progress = report['3_tien_trinh_van_hanh'] || {}; const interaction = report['4_kha_nang_tuong_tac'] || {}; const conclusion = report['5_lap_luan_gia_dinh'] || {}; const note = report['6_thuc_chung'] || {};
+      $('summary-conclusion').innerHTML = `<strong>Dòng lực Hào 1 → Hào 6</strong><br>Engine hiện chưa phát ma trận từng hào; phần tổng kết dùng các trường thật đã có: xu hướng <b>${escapeHtml(jsonText(progress.xu_huong, '—'))}</b>, tương tác <b>${escapeHtml(jsonText(interaction, '—'))}</b>.<br><br><strong>Tổng hợp từ Engine</strong><br>${escapeHtml(jsonText(conclusion, 'Chưa có lập luận giả định.'))}<br><br><strong>Thực chứng</strong><br>${escapeHtml(jsonText(note, 'Chưa có dữ liệu thực chứng.'))}`;
+    }
+
+    function renderConsult() {
+      const hasSession = !!state.analysis; $('session-context').innerHTML = hasSession ? `<strong>Context đang dùng:</strong> ${escapeHtml(state.input.question)} · ${escapeHtml(state.input.total)} · ${escapeHtml((getReportParts().mainHex.ten_que || 'quẻ gốc'))} → ${escapeHtml((getReportParts().changedHex.ten_que || 'quẻ biến'))}. Tư vấn không gieo lại.` : '<strong>Chưa có phiên.</strong> Hãy gieo quẻ ở INPUT trước khi hỏi tiếp.';
+      if (!state.consultation.length) $('chat-history').innerHTML = '<div class="chat-empty">Lịch sử tư vấn sẽ xuất hiện ở đây. Context của phiên hiện tại được giữ nguyên cho mỗi câu hỏi.</div>'; else $('chat-history').innerHTML = state.consultation.map(item => `<div class="bubble ${item.role} ${item.pending ? 'pending' : ''}">${escapeHtml(item.text)}</div>`).join('');
+      $('consult-send').disabled = !hasSession || state.consultationBusy; $('consult-question').disabled = !hasSession || state.consultationBusy; $('consult-loading').classList.toggle('show', state.consultationBusy); $('consult-error').classList.toggle('show', !!state.consultError); $('consult-error-text').textContent = state.consultError || '';
+    }
+    async function sendConsultation(question) {
+      if (!state.analysis) { state.consultError = 'Chưa có phiên kết quả để làm context.'; renderConsult(); return; }
+      state.consultError = ''; state.consultationBusy = true; state.lastConsultQuestion = question; state.consultation.push({ role: 'user', text: question }); renderConsult();
+      const context = { input: state.input, engine_output: state.analysis.engine_output, ai_interpretation: state.analysis.ai_interpretation, history: state.consultation.slice(0, -1) };
+      const prompt = `Bạn đang ở phiên tư vấn tiếp nối của Duyên Dịch. Không gieo lại quẻ và không thay đổi giá trị Engine. Hãy trả lời câu hỏi mới dựa trên context JSON thật dưới đây, phân biệt rõ dữ liệu Engine với diễn giải.\n\nCÂU HỎI MỚI: ${question}\n\nCONTEXT:\n${JSON.stringify(context, null, 2)}`;
+      consultAbortTimer = setTimeout(() => {}, 130000);
+      try { const { data } = await getJson('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt, system_instruction: 'Bạn là lớp tư vấn realtime của Duyên Dịch. Không tự gieo lại quẻ, không bịa dữ liệu Engine và chỉ diễn giải context được cung cấp.', model: 'gemini-3.6-flash' }) }); state.consultation.push({ role: 'assistant', text: data.text || 'API không trả về nội dung tư vấn.' }); $('consult-question').value = ''; }
+      catch (failure) { state.consultError = `${failure.message}${failure.status ? ` (HTTP ${failure.status})` : ''}`; }
+      finally { clearTimeout(consultAbortTimer); state.consultationBusy = false; renderConsult(); }
+    }
+    function renderMap() {
+      const coordinates = state.coordinates || (state.input && state.input.latitude && state.input.longitude ? { latitude: Number(state.input.latitude), longitude: Number(state.input.longitude) } : null); const parts = getReportParts();
+      if (coordinates && Number.isFinite(coordinates.latitude) && Number.isFinite(coordinates.longitude)) { $('map-status').textContent = 'Đã có vị trí thiết bị'; $('map-description').textContent = 'Marker placeholder đang dùng GPS thật; chưa có map provider/key để vẽ bản đồ nền.'; $('map-gps').textContent = `${coordinates.latitude.toFixed(6)}, ${coordinates.longitude.toFixed(6)}`; } else { $('map-status').textContent = 'Chưa có vị trí'; $('map-description').textContent = 'Bật AUTO ở INPUT và cấp quyền định vị để hiển thị marker theo GPS thiết bị.'; $('map-gps').textContent = 'Chưa có dữ liệu'; }
+      const khi = parts.technical.vecto_khi || {}; $('map-direction').textContent = state.analysis ? text(khi.D, 'Engine chưa phát') : 'Chưa có Engine'; $('map-s07').textContent = state.analysis ? text(khi.S, 'Engine chưa phát') : 'Chưa có Engine'; $('map-angle').textContent = 'Core Engine chưa phát'; $('map-warning').textContent = 'Core Engine chưa phát'; $('map-remedy').textContent = 'Core Engine chưa phát';
     }
 
     async function analyze(payload) {
-      const controller = new AbortController();
-      timeoutTimer = setTimeout(() => controller.abort(), 130000);
-      try {
-        const { data } = await getJson('/api/duyen-dich/analyze', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          signal: controller.signal
-        });
-        renderResult(data);
-      } catch (failure) {
-        if (failure.name === 'AbortError') showError('API chưa phản hồi trong 130 giây. Hãy thử lại; backend có thể cần tới 120 giây cho một phiên phân tích.');
-        else showError(`${failure.message}${failure.status ? ` (HTTP ${failure.status})` : ''}`);
-      } finally {
-        setBusy(false);
-      }
+      const controller = new AbortController(); analysisAbortTimer = setTimeout(() => controller.abort(), 130000);
+      try { const { data } = await getJson('/api/duyen-dich/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: controller.signal }); state.analysis = data; state.consultation = []; state.consultError = ''; renderResult(); setView('result'); }
+      catch (failure) { if (failure.name === 'AbortError') showError('API chưa phản hồi trong 130 giây. Hãy thử lại; backend có thể cần tới 120 giây cho một phiên phân tích.'); else showError(`${failure.message}${failure.status ? ` (HTTP ${failure.status})` : ''}`); }
+      finally { clearTimeout(analysisAbortTimer); setBusy(false); renderInputSession(); }
     }
 
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      hideError();
-      const validationError = validate();
-      if (validationError) { showError(validationError); return; }
-      lastPayload = { mode: 'mot_tin_hieu', total: Number(signalInput.value), question: questionInput.value.trim() };
-      setBusy(true);
-      startLoadingMessages();
-      analyze(lastPayload);
-    });
-
-    healthButton.addEventListener('click', checkHealth);
-    signalInput.addEventListener('input', () => { signalInput.value = signalInput.value.replace(/\D/g, '').slice(0, 6); });
-    questionInput.addEventListener('input', hideError);
-    signalInput.addEventListener('input', hideError);
-    checkHealth();
+    $('analysis-form').addEventListener('submit', event => { event.preventDefault(); hideError(); const error = validateInput(); if (error) { showError(error); return; } state.input = collectInput(); state.analysis = null; setBusy(true); startLoadingMessages(); renderInputSession(); analyze(buildPayload(state.input)); });
+    $('retry-button').addEventListener('click', () => { hideError(); if (state.input) { setBusy(true); startLoadingMessages(); analyze(buildPayload(state.input)); } });
+    $('auto-mode').addEventListener('click', () => setMode('auto')); $('manual-mode').addEventListener('click', () => setMode('manual')); $('random-button').addEventListener('click', randomSignal); $('health-button').addEventListener('click', checkHealth); $('input-health-button').addEventListener('click', checkHealth);
+    $('signal').addEventListener('input', () => { $('signal').value = $('signal').value.replace(/\D/g, '').slice(0, 6); hideError(); }); $('question').addEventListener('input', hideError);
+    function handleImage(file) { if (!file) return; state.imageName = file.name; if (state.imageUrl) URL.revokeObjectURL(state.imageUrl); state.imageUrl = URL.createObjectURL(file); $('preview-image').src = state.imageUrl; $('image-caption').textContent = `${file.name} · ${Math.round(file.size / 1024)} KB · giữ local trong session, chưa gửi backend`; $('image-preview').classList.add('show'); }
+    $('camera-input').addEventListener('change', event => handleImage(event.target.files[0])); $('image-input').addEventListener('change', event => handleImage(event.target.files[0]));
+    $('consult-form').addEventListener('submit', event => { event.preventDefault(); const question = $('consult-question').value.trim(); if (question && !state.consultationBusy) sendConsultation(question); }); $('consult-retry').addEventListener('click', () => { if (state.lastConsultQuestion && !state.consultationBusy) sendConsultation(state.lastConsultQuestion); }); $('consult-bubble').addEventListener('click', () => setView('consult'));
+    document.querySelectorAll('.nav-button').forEach(button => button.addEventListener('click', () => setView(button.dataset.view))); document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => setView(button.dataset.go))); document.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('[data-tab]').forEach(item => item.classList.toggle('active', item === button)); $('tab-luc-hao').classList.toggle('hidden', button.dataset.tab !== 'luc-hao'); $('tab-nxn').classList.toggle('hidden', button.dataset.tab !== 'nxn'); }));
+    setMode('auto'); checkHealth(); renderInputSession(); renderMap();
   </script>
 </body>
 </html>
