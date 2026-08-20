@@ -1,16 +1,15 @@
 """Gemini API adapter for DUYEN DICH.
 
-The API key is read only from GEMINI_API_KEY. It is never stored in source code.
-Model can be overridden with GEMINI_MODEL.
+Uses the Gemini REST API directly so the serverless runtime does not retain a
+Google GenAI client between invocations.
 """
 
 from __future__ import annotations
 
+import json
 import os
+from urllib import error, request
 from typing import Any
-
-from google import genai
-from google.genai import types
 
 DEFAULT_MODEL = "gemini-2.5-flash"
 
@@ -19,15 +18,7 @@ class GeminiConfigurationError(RuntimeError):
     """Raised when Gemini is not configured in the runtime environment."""
 
 
-def _client() -> genai.Client:
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        raise GeminiConfigurationError("GEMINI_API_KEY chưa được cấu hình.")
-    return genai.Client(api_key=api_key)
-
-
 def _resolve_model(model: str | None = None) -> str:
-    """Always return a non-empty model name, including when the env var is blank."""
     return (model or os.getenv("GEMINI_MODEL") or DEFAULT_MODEL).strip()
 
 
@@ -39,33 +30,55 @@ def generate_text(
     temperature: float = 0.2,
     max_output_tokens: int = 4096,
 ) -> str:
-    """Generate a text response from Gemini without exposing the API key."""
     if not prompt or not prompt.strip():
         raise ValueError("prompt không được rỗng")
 
-    config_kwargs: dict[str, Any] = {
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        raise GeminiConfigurationError("GEMINI_API_KEY chưa được cấu hình.")
+
+    resolved_model = _resolve_model(model)
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{resolved_model}:generateContent?key={api_key}"
+
+    generation_config = {
         "temperature": temperature,
-        "max_output_tokens": max_output_tokens,
+        "maxOutputTokens": max_output_tokens,
+    }
+    payload: dict[str, Any] = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": generation_config,
     }
     if system_instruction:
-        config_kwargs["system_instruction"] = system_instruction
+        payload["systemInstruction"] = {"parts": [{"text": system_instruction}]}
 
-    response = _client().models.generate_content(
-        model=_resolve_model(model),
-        contents=prompt,
-        config=types.GenerateContentConfig(**config_kwargs),
+    req = request.Request(
+        url,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
     )
 
-    text = getattr(response, "text", None)
+    try:
+        with request.urlopen(req, timeout=45) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Gemini HTTP {exc.code}: {detail}") from exc
+    except error.URLError as exc:
+        raise RuntimeError(f"Không kết nối được Gemini: {exc.reason}") from exc
+
+    candidates = result.get("candidates") or []
+    if not candidates:
+        raise RuntimeError(f"Gemini không trả về candidate: {result}")
+
+    parts = (candidates[0].get("content") or {}).get("parts") or []
+    text = "".join(str(part.get("text", "")) for part in parts).strip()
     if not text:
-        raise RuntimeError("Gemini không trả về nội dung văn bản.")
+        raise RuntimeError(f"Gemini không trả về nội dung văn bản: {result}")
     return text
 
 
 def analyze_engine_output(engine_output: dict[str, Any], question: str = "") -> str:
-    """Ask Gemini to interpret an already-computed engine result."""
-    import json
-
     payload = json.dumps(engine_output, ensure_ascii=False, default=str)
     prompt = (
         "Hãy diễn giải kết quả Duyên Dịch dưới đây. "
