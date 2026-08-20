@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Local test and build artifacts
+.coverage
+htmlcov/
+*.log
+
+# Vercel local metadata
+.vercel/
+
+# Editor metadata
+.vscode/
+.idea/
