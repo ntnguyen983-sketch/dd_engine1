@@ -1,8 +1,12 @@
 # Duyên Dịch (DCGF) - dependencies
-# Lõi engine/ chỉ dùng thư viện chuẩn Python (>=3.10), không phụ thuộc ngoài.
-# Flask chỉ cần thiết nếu chạy app.py (Web API).
+# Lõi engine chỉ dùng thư viện chuẩn Python (>=3.10), không phụ thuộc ngoài.
+# Flask cần thiết cho Web API.
 
 flask>=3.0.0
+
+# Google GenAI SDK — Gemini API
+# API key is supplied at runtime via GEMINI_API_KEY.
+google-genai>=1.0.0
 
 # Tùy chọn cho phát triển / kiểm thử:
 pytest>=8.0.0
