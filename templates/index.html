@@ -124,6 +124,7 @@
     pre { max-height: 440px; overflow: auto; margin: 12px 0 0; border: 1px solid var(--line); border-radius: 12px; padding: 12px; color: #c8d7e6; background: #050d18; font-size: 10px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
     .availability { color: var(--muted); font-size: 11px; line-height: 1.6; }
     .availability strong { display: block; margin-bottom: 5px; color: var(--gold-soft); }
+    .missing-value { color: var(--muted); font-style: italic; }
     .line-list { display: grid; gap: 8px; }
     .line-list details { margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: rgba(4, 14, 26, .38); }
     .line-list summary { padding: 12px; list-style-position: inside; }
@@ -177,6 +178,11 @@
     .engine-context { margin-top: 13px; border: 1px solid rgba(233, 189, 97, .2); border-radius: 13px; padding: 11px; background: rgba(233, 189, 97, .04); }
     .engine-context summary { color: var(--gold-soft); }
     .engine-context .engine-tree { margin-top: 9px; }
+    .public-note { margin: 0 0 10px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .debug-panel { border-color: rgba(164, 190, 222, .12); background: rgba(4, 14, 26, .16); }
+    .debug-panel summary { color: #8fa2b6; font-size: 10px; letter-spacing: .05em; }
+    .debug-note { margin: 9px 0 0; color: #778ba0; font-size: 10px; line-height: 1.5; }
+    .missing-value { color: #778ba0; font-style: italic; }
     .hidden { display: none !important; }
 
     @media (min-width: 700px) {
@@ -201,59 +207,59 @@
   <div class="app-shell">
     <main class="app">
       <header class="topbar">
-        <div class="brand"><div class="brand-mark" aria-hidden="true">DD</div><div><p class="brand-name">DUYÊN DỊCH</p><p class="brand-sub">DCGF · FIELD APP</p></div></div>
+        <div class="brand"><div class="brand-mark" aria-hidden="true">DD</div><div><p class="brand-name">FIELD</p><p class="brand-sub">ONE QUESTION · ONE OBSERVATION</p></div></div>
         <button id="health-button" class="health" type="button" role="status" aria-live="polite"><span class="health-dot"></span><span id="health-text">Đang kiểm tra hệ thống</span></button>
       </header>
 
       <section class="hero" aria-labelledby="page-title">
-        <p class="eyebrow">Một tín hiệu · Một lần quan sát</p>
+        <p class="eyebrow">Một câu hỏi · Một lần quan sát</p>
         <h1 id="page-title">Đọc thế và hướng<br>của câu hỏi.</h1>
-        <p class="hero-copy">Một phiên Duyên Dịch đi qua bốn lớp: nhập tín hiệu, đọc kết quả, tư vấn theo context hiện tại và quan sát dữ liệu vị trí.</p>
+        <p class="hero-copy">Bắt đầu từ câu hỏi của bạn, đọc câu trả lời, xem phần chuyên sâu khi cần và tiếp tục tư vấn trong cùng một phiên.</p>
       </section>
 
       <section id="view-input" class="view active" aria-labelledby="input-title">
         <div class="workspace">
           <form id="analysis-form" class="card form-card" novalidate>
-            <div class="section-heading"><div><p class="section-kicker">01 · Input</p><h2 id="input-title">Khởi tạo phiên</h2><p>Giữ lại toàn bộ dữ liệu để truy vết và retry.</p></div><span class="step-number">01</span></div>
+            <div class="section-heading"><div><p class="section-kicker">01 · Bắt đầu</p><h2 id="input-title">Một câu hỏi mới</h2><p>Nhập câu hỏi và sáu chữ số để bắt đầu.</p></div><span class="step-number">01</span></div>
             <div class="mode-switch" role="tablist" aria-label="Chế độ nhập"><button id="auto-mode" class="mode-button active" type="button" data-mode="auto">AUTO</button><button id="manual-mode" class="mode-button" type="button" data-mode="manual">NHẬP TAY</button></div>
             <div id="mode-copy" class="mode-copy"><strong>AUTO</strong> tự lấy ngày, giờ và GPS bằng quyền của trình duyệt. Địa chỉ chỉ hiển thị nếu có provider geocoding; không tự suy diễn.</div>
             <div class="grid-two">
-              <div><label for="date">Date</label><input id="date" type="date" disabled></div>
-              <div><label for="time">Time</label><input id="time" type="time" disabled></div>
+              <div><label for="date">Ngày</label><input id="date" type="date" disabled></div>
+              <div><label for="time">Giờ</label><input id="time" type="time" disabled></div>
             </div>
-            <label for="address">Address</label><input id="address" type="text" placeholder="Địa chỉ hoặc ghi chú vị trí" disabled>
+            <label for="address">Địa chỉ</label><input id="address" type="text" placeholder="Địa chỉ hoặc ghi chú vị trí" disabled>
             <p id="location-note" class="field-hint">Đang chuẩn bị dữ liệu thiết bị.</p>
             <div class="grid-two">
-              <div><label for="latitude">GPS latitude</label><input id="latitude" type="text" placeholder="Chưa có GPS" disabled></div>
-              <div><label for="longitude">GPS longitude</label><input id="longitude" type="text" placeholder="Chưa có GPS" disabled></div>
+              <div><label for="latitude">Vĩ độ</label><input id="latitude" type="text" placeholder="Chưa có vị trí" disabled></div>
+              <div><label for="longitude">Kinh độ</label><input id="longitude" type="text" placeholder="Chưa có vị trí" disabled></div>
             </div>
-            <label for="signal">Random number 6 digit <span class="required">*</span></label>
+            <label for="signal">Sáu chữ số <span class="required">*</span></label>
             <div class="number-row"><input id="signal" type="text" inputmode="numeric" autocomplete="off" maxlength="6" pattern="[0-9]{6}" placeholder="Ví dụ: 369147" required><button id="random-button" class="small-action" type="button">TẠO SỐ</button></div>
-            <p class="field-hint">Đúng sáu chữ số. Có thể nhập tay hoặc tạo số ngẫu nhiên.</p>
+            <p class="field-hint">Nhập đúng sáu chữ số hoặc tạo nhanh một dãy số.</p>
             <label for="question">Câu hỏi <span class="required">*</span></label><textarea id="question" placeholder="Ví dụ: tình cảm, công việc, quyết định..." required></textarea>
-            <p class="field-hint">Câu hỏi là dữ liệu bắt buộc và sẽ được gửi tới lớp AI diễn giải.</p>
+            <p class="field-hint">Câu hỏi bắt buộc để tạo kết quả và phần diễn giải.</p>
             <label for="supplement">Bổ sung <span class="field-hint" style="display:inline">(không bắt buộc)</span></label><textarea id="supplement" placeholder="Bối cảnh thêm cho phiên này, nếu có."></textarea>
             <div class="image-tools"><label class="file-button">CAMERA<input id="camera-input" type="file" accept="image/*" capture="environment"></label><label class="file-button">UPLOAD ẢNH<input id="image-input" type="file" accept="image/*"></label></div>
             <div id="image-preview" class="image-preview"><img id="preview-image" alt="Ảnh đã chọn"><p id="image-caption" class="image-caption"></p></div>
-            <p class="source-note">Backend hiện đã kiểm chứng payload tối thiểu <code>mode / total / question</code>. Các trường thiết bị và ảnh được giữ trong phiên UI; không gửi schema chưa được backend công bố.</p>
-            <div class="actions"><button id="submit-button" class="primary" type="submit">GIEO QUẺ / PHÂN TÍCH</button><button id="input-health-button" class="secondary" type="button">Health</button></div>
-            <div id="loading" class="loading" role="status" aria-live="polite"><div class="loading-row"><span class="spinner" aria-hidden="true"></span><span id="loading-title">Engine đang tính và AI đang diễn giải...</span></div><small id="loading-detail">Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.</small></div>
+            <p class="source-note">Thông tin thiết bị và ảnh chỉ được giữ trong phiên này; chúng không làm thay đổi câu hỏi và sáu chữ số bạn đã nhập.</p>
+            <div class="actions"><button id="submit-button" class="primary" type="submit">GIEO QUẺ / PHÂN TÍCH</button><button id="input-health-button" class="secondary" type="button">Trạng thái</button></div>
+            <div id="loading" class="loading" role="status" aria-live="polite"><div class="loading-row"><span class="spinner" aria-hidden="true"></span><span id="loading-title">Đang đọc câu hỏi và chuẩn bị câu trả lời...</span></div><small id="loading-detail">Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.</small></div>
             <div id="error" class="error" role="alert"><strong>Không thể hoàn tất phân tích.</strong><span id="error-text"></span><button id="retry-button" class="retry-button" type="button">THỬ LẠI</button></div>
           </form>
-          <div class="card form-card"><p class="section-kicker">Session</p><h2>Truy vết phiên</h2><div id="input-session-summary" class="availability"><strong>Chưa có dữ liệu</strong>Sau khi gieo quẻ, các trường input sẽ được xác nhận trong màn hình Kết quả.</div></div>
+          <div class="card form-card"><p class="section-kicker">Phiên hiện tại</p><h2>Thông tin phiên</h2><div id="input-session-summary" class="availability"><strong>Chưa có dữ liệu</strong>Sau khi gieo quẻ, các trường input sẽ được xác nhận trong màn hình Kết quả.</div></div>
         </div>
       </section>
 
-      <section id="view-result" class="view" aria-labelledby="result-title"><div id="result-empty" class="card output-card result-empty"><strong>Chưa có kết quả phiên.</strong>Hãy sang <button class="small-action" data-go="input" type="button">INPUT</button> và bắt đầu bằng một câu hỏi rõ ràng.</div><div id="result-content" class="card output-card hidden"><p class="section-kicker">02 · Result</p><h2 id="result-title">Kết quả + diễn giải</h2><p class="source-note">Các trường dưới đây lấy từ Engine Output thật; trường nào Core Engine chưa phát sẽ được đánh dấu rõ ràng.</p><section class="result-block"><h3 class="result-title">A — Xác nhận <span>input đã sử dụng</span></h3><div id="input-confirmation" class="input-confirmation"></div></section><section class="result-block"><h3 class="result-title">B — Câu trả lời trực tiếp <span>từ Engine</span></h3><div id="direct-answer" class="direct-grid"></div></section><section class="result-block"><h3 class="result-title">Quẻ <span>gốc và biến</span></h3><div id="summary" class="summary"></div></section><section class="result-block"><h3 class="result-title">C — Engine fields <span>các trường thật theo section</span></h3><div id="six-lines" class="line-list"></div><div id="engine-sections" class="engine-output-stack"></div></section><section class="result-block"><h3 class="result-title">D — Signals <span>xu hướng → tương tác → thực chứng</span></h3><div id="highlights" class="timeline"></div></section><section class="result-block"><h3 class="result-title">E — Truy vết</h3><div class="subtabs"><button class="tab-button active" type="button" data-tab="luc-hao">ĐỒ THỊ SIE</button><button class="tab-button" type="button" data-tab="nxn">5 CẤP ĐỘ</button></div><div id="tab-luc-hao" class="availability" style="margin-top:10px"></div><div id="tab-nxn" class="availability hidden" style="margin-top:10px"></div></section><section class="result-block"><h3 class="result-title">F — Tổng kết</h3><div id="summary-conclusion" class="availability"></div></section><section class="interpretation"><h3>AI Interpretation</h3><div id="interpretation" class="interpretation-body">Chưa có diễn giải.</div></section><details><summary>Xem Engine Output đầy đủ</summary><pre id="raw-output">{}</pre></details></div></section>
+      <section id="view-result" class="view" aria-labelledby="result-title"><div id="result-empty" class="card output-card result-empty"><strong>Chưa có kết quả phiên.</strong>Hãy sang <button class="small-action" data-go="input" type="button">BẮT ĐẦU</button> và nhập một câu hỏi rõ ràng.</div><div id="result-content" class="card output-card hidden"><p class="section-kicker">02 · Kết quả</p><h2 id="result-title">Câu hỏi và câu trả lời</h2><p class="source-note">Câu trả lời được trình bày theo dữ liệu thật của phiên; phần nào chưa được phát sẽ ghi rõ “Chưa có dữ liệu”.</p><section class="result-block"><h3 class="result-title">Câu hỏi</h3><div id="input-confirmation" class="input-confirmation"></div></section><section class="result-block"><h3 class="result-title">Đáp án</h3><div id="direct-answer" class="direct-grid"></div></section><section class="result-block"><h3 class="result-title">Quẻ <span>gốc và biến</span></h3><div id="summary" class="summary"></div></section><section class="result-block"><h3 class="result-title">Lục Hào</h3><p id="moving-line-note" class="public-note"></p><div id="six-lines" class="line-list"></div></section><section class="result-block"><h3 class="result-title">Diễn tiến</h3><div id="highlights" class="timeline"></div></section><section class="interpretation"><h3>Diễn giải</h3><div id="interpretation" class="interpretation-body">Chưa có diễn giải.</div></section><section class="result-block"><h3 class="result-title">Tư vấn thêm</h3><p class="source-note">Bạn có thể tiếp tục hỏi trong cùng phiên ở màn hình TƯ VẤN.</p><button class="secondary" data-go="consult" type="button">MỞ TƯ VẤN</button></section><details class="debug-panel"><summary>Thông tin kỹ thuật nội bộ</summary><p class="debug-note">Khu vực dành cho kiểm tra dữ liệu nguyên bản; không phải câu trả lời dành cho người dùng.</p><div id="engine-sections" class="engine-output-stack"></div><div class="subtabs"><button class="tab-button active" type="button" data-tab="luc-hao">ĐỒ THỊ SIE</button><button class="tab-button" type="button" data-tab="nxn">5 CẤP ĐỘ</button></div><div id="tab-luc-hao" class="availability" style="margin-top:10px"></div><div id="tab-nxn" class="availability hidden" style="margin-top:10px"></div><div id="summary-conclusion" class="availability"></div><details><summary>Xem dữ liệu nguyên bản</summary><pre id="raw-output">{}</pre></details></details></div></section>
 
-      <section id="view-consult" class="view" aria-labelledby="consult-title"><div class="card consult-card"><p class="section-kicker">03 · Tư vấn realtime</p><h2 id="consult-title">Hỏi tiếp trong cùng phiên</h2><p class="source-note">Không gieo lại quẻ. Mỗi câu hỏi gửi context của kết quả hiện tại, input và lịch sử hội thoại tới <code>/api/ai</code>.</p><div id="session-context" class="session-context"></div><details id="consult-engine-context" class="engine-context"><summary>Engine output nguyên vẹn đang gửi tới /api/ai</summary><div class="engine-tree">Chưa có phiên.</div></details><div id="chat-history" class="chat-history"></div><form id="consult-form" class="consult-form"><textarea id="consult-question" placeholder="Ví dụ: Tôi nên ưu tiên điều gì trong bước tiếp theo?" aria-label="Câu hỏi tư vấn mới"></textarea><button id="consult-send" class="primary" type="submit">GỬI</button></form><div id="consult-loading" class="loading"><div class="loading-row"><span class="spinner" aria-hidden="true"></span><span>AI đang đọc context phiên...</span></div><small>Có thể mất tới 120 giây. Nội dung câu hỏi vẫn được giữ lại khi lỗi.</small></div><div id="consult-error" class="error"><strong>Tư vấn chưa hoàn tất.</strong><span id="consult-error-text"></span><button id="consult-retry" class="retry-button" type="button">THỬ LẠI</button></div></div></section>
+      <section id="view-consult" class="view" aria-labelledby="consult-title"><div class="card consult-card"><p class="section-kicker">03 · Tư vấn thêm</p><h2 id="consult-title">Hỏi tiếp trong cùng phiên</h2><p class="source-note">Không gieo lại quẻ. Câu hỏi mới được trả lời dựa trên kết quả và lịch sử của phiên hiện tại.</p><div id="session-context" class="session-context"></div><details id="consult-engine-context" class="engine-context debug-panel"><summary>Thông tin phiên nội bộ</summary><p class="debug-note">Dữ liệu nguyên bản được giữ để bảo đảm tính liên tục của phiên.</p><div class="engine-tree">Chưa có phiên.</div></details><div id="chat-history" class="chat-history"></div><form id="consult-form" class="consult-form"><textarea id="consult-question" placeholder="Ví dụ: Tôi nên ưu tiên điều gì trong bước tiếp theo?" aria-label="Câu hỏi tư vấn mới"></textarea><button id="consult-send" class="primary" type="submit">GỬI</button></form><div id="consult-loading" class="loading"><div class="loading-row"><span class="spinner" aria-hidden="true"></span><span>Đang chuẩn bị câu trả lời...</span></div><small>Có thể mất tới 120 giây. Nội dung câu hỏi vẫn được giữ lại khi lỗi.</small></div><div id="consult-error" class="error"><strong>Tư vấn chưa hoàn tất.</strong><span id="consult-error-text"></span><button id="consult-retry" class="retry-button" type="button">THỬ LẠI</button></div></div></section>
 
-      <section id="view-map" class="view" aria-labelledby="map-title"><div class="card map-card"><p class="section-kicker">04 · Map ứng dụng</p><h2 id="map-title">Vị trí và trường Khí</h2><p class="source-note">Đây là màn hình map riêng. Không có map provider/key trong backend hiện tại nên chỉ hiển thị placeholder và GPS thật nếu trình duyệt cấp quyền.</p><div id="map-shell" class="map-shell"><div class="map-placeholder"><div class="map-marker">◎</div><strong id="map-status">Chưa có vị trí</strong><p id="map-description">Bật AUTO ở INPUT và cấp quyền định vị để hiển thị marker theo GPS thiết bị.</p></div></div><div class="map-stats"><div class="map-stat"><div class="map-label">GPS</div><div id="map-gps" class="map-value">Chưa có dữ liệu</div></div><div class="map-stat"><div class="map-label">Hướng nội bộ D</div><div id="map-direction" class="map-value">Chưa có Engine</div></div><div class="map-stat"><div class="map-label">Khí S07 / S</div><div id="map-s07" class="map-value">Chưa có Engine</div></div><div class="map-stat"><div class="map-label">Nhịp thời gian T</div><div id="map-angle" class="map-value">Core Engine chưa phát dữ liệu</div></div><div class="map-stat"><div class="map-label">Tương nghịch</div><div id="map-warning" class="map-value">Core Engine chưa phát dữ liệu</div></div><div class="map-stat"><div class="map-label">Tương thuận</div><div id="map-remedy" class="map-value">Core Engine chưa phát dữ liệu</div></div></div><details id="map-engine-context" class="engine-context"><summary>Field Engine liên quan vị trí và trường Khí</summary><div class="engine-tree">Chưa có Engine.</div></details><p class="map-note">Lưu ý: D là scalar hướng nội bộ của Engine, không phải phương vị địa lý. UI chỉ hiển thị field thật; không suy diễn góc, cảnh báo, hóa giải hoặc phương vị khi backend không phát.</p></div></section>
+      <section id="view-map" class="view" aria-labelledby="map-title"><div class="card map-card"><p class="section-kicker">04 · Vị trí</p><h2 id="map-title">Vị trí của phiên</h2><p class="source-note">Màn hình này hiển thị vị trí thiết bị khi bạn cho phép trình duyệt truy cập GPS. Bản đồ nền chưa được kết nối.</p><div id="map-shell" class="map-shell"><div class="map-placeholder"><div class="map-marker">◎</div><strong id="map-status">Chưa có vị trí</strong><p id="map-description">Bật AUTO ở BẮT ĐẦU và cấp quyền định vị để hiển thị vị trí thiết bị.</p></div></div><div class="map-stats"><div class="map-stat"><div class="map-label">Vị trí thiết bị</div><div id="map-gps" class="map-value">Chưa có dữ liệu</div></div><div class="map-stat"><div class="map-label">Trạng thái bản đồ</div><div id="map-map-state" class="map-value">Chưa kết nối bản đồ nền</div></div></div><details id="map-engine-context" class="engine-context debug-panel"><summary>Thông tin phiên nội bộ</summary><p class="debug-note">Các trường tính toán nguyên bản vẫn được giữ ở đây để kiểm tra, nhưng không thuộc phần hiển thị phổ thông.</p><div class="engine-tree">Chưa có dữ liệu.</div></details></div></section>
 
-      <p class="footer">DUYÊN DỊCH / DCGF · Kết quả là một khung quan sát, không phải dự đoán tất định.</p>
+      <p class="footer">Kết quả là một khung quan sát, không phải dự đoán tất định.</p>
     </main>
     <button id="consult-bubble" class="floating-bubble" type="button" aria-label="Mở tư vấn realtime">💬</button>
-    <nav class="bottom-nav" aria-label="Điều hướng chính"><button class="nav-button active" data-view="input" type="button"><span class="nav-icon">⌂</span>INPUT</button><button class="nav-button" data-view="result" type="button"><span class="nav-icon">◈</span>KẾT QUẢ</button><button class="nav-button" data-view="consult" type="button"><span class="nav-icon">✦</span>TƯ VẤN</button><button class="nav-button" data-view="map" type="button"><span class="nav-icon">⌖</span>MAP</button></nav>
+    <nav class="bottom-nav" aria-label="Điều hướng chính"><button class="nav-button active" data-view="input" type="button"><span class="nav-icon">⌂</span>BẮT ĐẦU</button><button class="nav-button" data-view="result" type="button"><span class="nav-icon">◈</span>KẾT QUẢ</button><button class="nav-button" data-view="consult" type="button"><span class="nav-icon">✦</span>TƯ VẤN</button><button class="nav-button" data-view="map" type="button"><span class="nav-icon">⌖</span>VỊ TRÍ</button></nav>
   </div>
 
   <script>
@@ -277,8 +283,14 @@
     }
     async function checkHealth() {
       setHealth('', 'Đang kiểm tra hệ thống');
-      try { const { data } = await getJson('/health'); setHealth('ok', `Sẵn sàng · ${data.gemini_model || 'Engine'}`); }
-      catch (failure) { setHealth('error', `Health lỗi${failure.status ? ` · ${failure.status}` : ''}`); }
+      try { await getJson('/health'); setHealth('ok', 'Hệ thống sẵn sàng'); }
+      catch (_) { setHealth('error', 'Chưa kết nối được'); }
+    }
+    function formatFailure(failure) {
+      if (failure?.name === 'AbortError') return 'Phiên này mất nhiều thời gian hơn dự kiến. Bạn có thể thử lại.';
+      if (failure?.status >= 500) return 'Hệ thống đang bận. Vui lòng thử lại sau ít phút.';
+      if (failure?.status === 400) return 'Thông tin gửi đi chưa hợp lệ. Vui lòng kiểm tra lại câu hỏi và sáu chữ số.';
+      return 'Chưa thể hoàn tất phiên này. Vui lòng thử lại.';
     }
 
     function setView(view) {
@@ -296,7 +308,7 @@
       $('auto-mode').classList.toggle('active', mode === 'auto'); $('manual-mode').classList.toggle('active', mode === 'manual');
       const auto = mode === 'auto';
       ['date', 'time', 'address', 'latitude', 'longitude'].forEach(id => { $(id).disabled = auto; });
-      $('mode-copy').innerHTML = auto ? '<strong>AUTO</strong> tự lấy ngày, giờ và GPS bằng quyền của trình duyệt. Địa chỉ chỉ hiển thị nếu có provider geocoding; không tự suy diễn.' : '<strong>NHẬP TAY</strong> nhập ngày, giờ và địa chỉ theo dữ liệu bạn muốn lưu cùng phiên. GPS chỉ lấy khi AUTO được bật.';
+      $('mode-copy').innerHTML = auto ? '<strong>AUTO</strong> tự lấy ngày, giờ và vị trí bằng quyền của trình duyệt. Địa chỉ chỉ hiển thị khi có kết nối bản đồ phù hợp.' : '<strong>NHẬP TAY</strong> nhập ngày, giờ và địa chỉ theo dữ liệu bạn muốn lưu cùng phiên. Vị trí chỉ lấy khi AUTO được bật.';
       if (auto) collectDeviceData();
     }
     function collectDeviceData() {
@@ -304,12 +316,12 @@
       $('date').value = now.toISOString().slice(0, 10);
       $('time').value = now.toTimeString().slice(0, 5);
       $('address').value = '';
-      $('location-note').textContent = 'Đang xin quyền GPS từ trình duyệt; địa chỉ cần provider geocoding nên không tự suy diễn.';
+      $('location-note').textContent = 'Đang xin quyền vị trí từ trình duyệt. Địa chỉ cần kết nối bản đồ phù hợp.';
       if (!navigator.geolocation) { $('location-note').textContent = 'Trình duyệt không hỗ trợ GPS. Bạn có thể chuyển sang NHẬP TAY.'; return; }
       navigator.geolocation.getCurrentPosition(position => {
         state.coordinates = { latitude: position.coords.latitude, longitude: position.coords.longitude };
         $('latitude').value = state.coordinates.latitude.toFixed(6); $('longitude').value = state.coordinates.longitude.toFixed(6);
-        $('location-note').textContent = 'GPS đã lấy từ thiết bị. Address chưa có provider geocoding trong project.';
+        $('location-note').textContent = 'Đã lấy vị trí từ thiết bị. Địa chỉ chưa có kết nối bản đồ.';
         renderMap();
       }, () => { state.coordinates = null; $('location-note').textContent = 'Chưa lấy được GPS hoặc quyền bị từ chối. Dữ liệu Engine vẫn dùng payload tối thiểu.'; renderMap(); }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 });
     }
@@ -334,8 +346,8 @@
     function showError(message) { $('error-text').textContent = message; $('error').classList.add('show'); }
     function hideError() { $('error').classList.remove('show'); }
     function startLoadingMessages() {
-      let seconds = 0; $('loading-title').textContent = 'Engine đang tính và AI đang diễn giải...'; $('loading-detail').textContent = 'Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.';
-      loadingTimer = setInterval(() => { seconds += 5; $('loading-title').textContent = seconds >= 90 ? 'Đang hoàn thiện diễn giải — gần xong...' : seconds >= 45 ? 'Engine đã phản hồi, AI đang hoàn thiện phần đọc nghĩa...' : 'Engine đang tính và AI đang diễn giải...'; $('loading-detail').textContent = `Đã chờ khoảng ${seconds} giây. Không đóng trang trong lúc xử lý.`; }, 5000);
+      let seconds = 0; $('loading-title').textContent = 'Đang đọc câu hỏi và chuẩn bị câu trả lời...'; $('loading-detail').textContent = 'Có thể mất tới 120 giây. Bạn có thể giữ nguyên trang trong lúc xử lý.';
+      loadingTimer = setInterval(() => { seconds += 5; $('loading-title').textContent = seconds >= 90 ? 'Đang hoàn thiện câu trả lời...' : seconds >= 45 ? 'Đang kiểm tra lại kết quả...' : 'Đang đọc câu hỏi và chuẩn bị câu trả lời...'; $('loading-detail').textContent = `Đã chờ khoảng ${seconds} giây. Không đóng trang trong lúc xử lý.`; }, 5000);
     }
 
     function metric(label, value, small = false) { return `<div class="metric"><div class="metric-label">${escapeHtml(label)}</div><div class="metric-value${small ? ' small' : ''}">${escapeHtml(value)}</div></div>`; }
@@ -362,38 +374,49 @@
       return entries.map(([key, value]) => `<details class="engine-section"><summary>${escapeHtml(fieldLabel(key))}<span class="engine-key">${escapeHtml(key)}</span></summary><div class="engine-tree">${renderTreeNode(value, `engine_output.${key}`)}</div></details>`).join('');
     }
     function renderInputSession() {
-      if (!state.input) { $('input-session-summary').innerHTML = '<strong>Chưa có dữ liệu</strong>Sau khi gieo quẻ, các trường input sẽ được xác nhận trong màn hình Kết quả.'; return; }
-      const sectionCount = Object.keys(state.analysis?.engine_output || {}).length;
-      const outputLine = state.analysis ? `Engine đã trả ${sectionCount} section thật; xem toàn bộ ở màn hình KẾT QUẢ.` : 'Đang chờ Engine output.';
-      $('input-session-summary').innerHTML = `<strong>${escapeHtml(state.input.question)}</strong>Payload gửi Engine: <code>${escapeHtml(JSON.stringify(buildPayload(state.input)))}</code><br>${escapeHtml(outputLine)}<br>Thiết bị, bổ sung và ảnh được giữ trong UI session; chưa gửi vì backend chưa công bố schema tương ứng.`;
+      if (!state.input) { $('input-session-summary').innerHTML = '<strong>Chưa có dữ liệu</strong>Sau khi bắt đầu, thông tin phiên sẽ xuất hiện ở đây.'; return; }
+      const outputLine = state.analysis ? 'Kết quả đã sẵn sàng ở màn hình KẾT QUẢ.' : 'Đang chờ kết quả.';
+      $('input-session-summary').innerHTML = `<strong>${escapeHtml(state.input.question)}</strong><br>${escapeHtml(outputLine)}<br>Thông tin thiết bị, bổ sung và ảnh được giữ trong phiên này.`;
     }
     function getReportParts() {
       const report = state.analysis?.engine_output || {}; const technical = report['1_phan_tich_ky_thuat'] || {}; const dynamics = report['2_dong_luc_hoc'] || {}; const progress = report['3_tien_trinh_van_hanh'] || {}; const interaction = report['4_kha_nang_tuong_tac'] || {}; const assumptions = report['5_lap_luan_gia_dinh'] || {}; const evidence = report['6_thuc_chung'] || {}; const calibration = report['7_hieu_chinh_mo_hinh'] || {}; const trend = progress.xu_huong || {}; const mainHex = (technical.ma_que || {}).que_chu || {}; const changedHex = (technical.ma_que || {}).que_bien || {};
       return { report, technical, dynamics, progress, interaction, assumptions, evidence, calibration, trend, mainHex, changedHex, semantic: report.semantic || {}, macro: report.macro || {} };
     }
+    function publicValueText(value, fallback = 'Chưa có dữ liệu') {
+      if (value === undefined || value === null || value === '') return fallback;
+      if (typeof value === 'object') {
+        const preferred = ['dien_giai', 'label', 'truy_vet', 'ghi_chu', 'luu_y'].map(key => value[key]).find(item => item !== undefined && item !== null && item !== '');
+        if (preferred !== undefined) return typeof preferred === 'object' ? jsonText(preferred, fallback) : String(preferred);
+        return jsonText(value, fallback);
+      }
+      return String(value);
+    }
+    function renderPublicValue(value, fallback = 'Chưa có dữ liệu') {
+      const result = publicValueText(value, fallback);
+      return result === fallback ? `<span class="missing-value">${escapeHtml(fallback)}</span>` : escapeHtml(result);
+    }
     function renderResult() {
       if (!state.analysis) { $('result-empty').classList.remove('hidden'); $('result-content').classList.add('hidden'); return; }
       $('result-empty').classList.add('hidden'); $('result-content').classList.remove('hidden');
-      const input = state.input || {}; const { report, technical, dynamics, progress, interaction, assumptions, evidence, calibration, trend, mainHex, changedHex } = getReportParts();
-      $('input-confirmation').innerHTML = [infoTile('Date / Time', `${input.date || '—'} · ${input.time || '—'}`), infoTile('GPS', input.latitude && input.longitude ? `${input.latitude}, ${input.longitude}` : 'Chưa có GPS'), infoTile('Address', input.address || 'Chưa cung cấp / chưa có geocoding'), infoTile('Random 6 digit', input.total), infoTile('Câu hỏi', input.question), infoTile('Bổ sung', input.supplement || 'Không có'), infoTile('Ảnh', input.image_name || 'Không có'), infoTile('Quẻ gốc → biến', `${mainHex.ten_que || '—'} → ${changedHex.ten_que || '—'}`)].join('');
-      const directConclusion = `${trend.label || trend.dien_giai || 'Engine chưa phát nhãn xu hướng'} · ${mainHex.ten_que || 'quẻ gốc'} → ${changedHex.ten_que || 'quẻ biến'}`;
-      const qualitative = trend.dien_giai || nested(progress, ['bieu_hien', 'dien_giai']) || 'Engine chưa phát định tính.';
-      const quantitative = `C = ${text(technical.chi_so_tin_cay_C)} · F = ${text(dynamics.luc_tong_the_F)} · T = ${text(nested(technical, ['vecto_khi', 'T']))}`;
-      const image = technical.dai_tuong || 'Engine chưa phát đại tượng.';
-      const secondary = interaction.thuan || interaction.nghich || 'Engine chưa phát trường tương tác.';
-      $('direct-answer').innerHTML = [infoTile('Kết luận chính', directConclusion), infoTile('Định tính', qualitative), infoTile('Định lượng', quantitative), infoTile('Đại tượng', jsonText(image, 'Engine chưa phát đại tượng.')), infoTile('Tương tác', jsonText(secondary, 'Engine chưa phát dữ liệu tương tác.')), infoTile('Nhịp thời gian T', progress.nhip_thoi_gian_T)].join('');
-      $('summary').innerHTML = [metric('Quẻ chủ', mainHex.ten_que, true), metric('Quẻ biến', changedHex.ten_que, true), metric('Hào động', mainHex.active_line), metric('Tin cậy C', technical.chi_so_tin_cay_C), metric('Lực tổng thể F', dynamics.luc_tong_the_F), metric('Vectơ Khí', jsonText(technical.vecto_khi), true), metric('Xu hướng', trend.label || trend.dien_giai, true), metric('Biểu hiện', jsonText(progress.bieu_hien), true)].join('');
-      renderLines(report); renderEngineSections(report); renderHighlights(report); renderTabs(report); renderSummary(report); $('interpretation').textContent = text(state.analysis.ai_interpretation, 'API chưa trả về phần AI Interpretation.'); $('raw-output').textContent = JSON.stringify(report, null, 2); renderInputSession();
+      const input = state.input || {}; const { report, technical, dynamics, progress, interaction, trend, mainHex, changedHex } = getReportParts();
+      $('input-confirmation').innerHTML = [infoTile('Ngày / giờ', `${input.date || 'Chưa có dữ liệu'} · ${input.time || 'Chưa có dữ liệu'}`), infoTile('Vị trí', input.latitude && input.longitude ? `${input.latitude}, ${input.longitude}` : 'Chưa có dữ liệu'), infoTile('Địa chỉ', input.address || 'Chưa có dữ liệu'), infoTile('Sáu chữ số', input.total), infoTile('Câu hỏi', input.question), infoTile('Bổ sung', input.supplement || 'Không có'), infoTile('Ảnh', input.image_name || 'Không có'), infoTile('Quẻ gốc → biến', `${mainHex.ten_que || 'Chưa có dữ liệu'} → ${changedHex.ten_que || 'Chưa có dữ liệu'}`)].join('');
+      const directConclusion = `${text(trend.label || trend.dien_giai, 'Chưa có dữ liệu xu hướng')} · ${text(mainHex.ten_que, 'Chưa có quẻ gốc')} → ${text(changedHex.ten_que, 'Chưa có quẻ biến')}`;
+      const qualitative = trend.dien_giai || nested(progress, ['bieu_hien', 'dien_giai']);
+      const image = technical.dai_tuong;
+      $('direct-answer').innerHTML = [infoTile('Ý nghĩa chính', directConclusion), infoTile('Diễn biến', qualitative || 'Chưa có dữ liệu'), infoTile('Hình ảnh quẻ', publicValueText(image)), infoTile('Điều thuận', publicValueText(interaction.thuan)), infoTile('Điều cần lưu ý', publicValueText(interaction.nghich)), infoTile('Nhịp tiếp theo', publicValueText(progress.nhip_thoi_gian_T))].join('');
+      $('summary').innerHTML = [metric('Quẻ gốc', mainHex.ten_que, true), metric('Quẻ biến', changedHex.ten_que, true), metric('Hào động', mainHex.active_line, false)].join('');
+      renderLines(report); renderEngineSections(report); renderHighlights(report); renderTabs(report); renderSummary(report); $('interpretation').textContent = text(state.analysis.ai_interpretation, 'Chưa có diễn giải.'); $('raw-output').textContent = JSON.stringify(report, null, 2); renderInputSession();
     }
     function renderLines(report) {
-      const levels = nested(report, ['1_phan_tich_ky_thuat', 'chi_tiet_5_cap_do']);
-      if (!Array.isArray(levels) || !levels.length) { $('six-lines').innerHTML = '<div class="availability"><strong>Chưa có chi tiết 5 cấp độ.</strong>Engine không trả mảng `chi_tiet_5_cap_do` trong response này.</div>'; return; }
-      $('six-lines').innerHTML = levels.map((item, index) => `<details><summary>Cấp ${index + 1} · ${escapeHtml(text(item.level, 'Engine không đặt tên cấp'))} <span class="engine-key">score ${escapeHtml(text(item.score))}</span></summary><div class="line-content">${renderTreeNode(item, `engine_output.1_phan_tich_ky_thuat.chi_tiet_5_cap_do[${index}]`)}</div></details>`).join('');
+      const levels = nested(report, ['1_phan_tich_ky_thuat', 'chi_tiet_5_cap_do']); const activeLine = nested(report, ['1_phan_tich_ky_thuat', 'ma_que', 'que_chu', 'active_line']);
+      $('moving-line-note').innerHTML = activeLine ? `Hào động: <strong>${escapeHtml(activeLine)}</strong>. Phiên này chưa có bản ghi chi tiết riêng cho từng hào.` : 'Phiên này chưa có dữ liệu hào động hoặc bản ghi chi tiết riêng cho từng hào.';
+      if (!Array.isArray(levels) || !levels.length) { $('six-lines').innerHTML = '<div class="availability"><strong>Chưa có dữ liệu chi tiết cho sáu hào.</strong>Phần quẻ và hào động được hiển thị ở phía trên khi phiên có phát dữ liệu.</div>'; return; }
+      $('six-lines').innerHTML = levels.map((item, index) => `<details><summary>Mức ${index + 1} · ${escapeHtml(text(item.level, 'Chưa có tên'))}</summary><div class="line-content">${renderTreeNode(item, `engine_output.1_phan_tich_ky_thuat.chi_tiet_5_cap_do[${index}]`)}</div></details>`).join('');
     }
     function renderHighlights(report) {
       const { progress, interaction, evidence, calibration } = getReportParts();
-      const values = [['Xu hướng', progress.xu_huong], ['Biểu hiện', progress.bieu_hien], ['Tương thuận', interaction.thuan], ['Tương nghịch', interaction.nghich], ['Thực chứng', evidence], ['Hiệu chỉnh mô hình', calibration]];
-      $('highlights').innerHTML = values.map(([key, value]) => `<div class="timeline-item"><div class="timeline-title">${escapeHtml(key)}</div><p class="timeline-text">${renderTreeNode(value, `engine_output.${key}`)}</p></div>`).join('');
+      const values = [['Xu hướng', progress.xu_huong], ['Biểu hiện', progress.bieu_hien], ['Điều thuận', interaction.thuan], ['Điều nghịch', interaction.nghich], ['Đối chiếu thực tế', evidence], ['Điều chỉnh sau quan sát', calibration]];
+      $('highlights').innerHTML = values.map(([key, value]) => `<div class="timeline-item"><div class="timeline-title">${escapeHtml(key)}</div><p class="timeline-text">${renderPublicValue(value)}</p></div>`).join('');
     }
     function renderTabs(report) {
       const sie = nested(report, ['1_phan_tich_ky_thuat', 'do_thi_sie']); const levels = nested(report, ['1_phan_tich_ky_thuat', 'chi_tiet_5_cap_do']);
@@ -407,7 +430,7 @@
     }
 
     function renderConsult() {
-      const hasSession = !!state.analysis; $('session-context').innerHTML = hasSession ? `<strong>Context đang dùng:</strong> ${escapeHtml(state.input.question)} · ${escapeHtml(state.input.total)} · ${escapeHtml((getReportParts().mainHex.ten_que || 'quẻ gốc'))} → ${escapeHtml((getReportParts().changedHex.ten_que || 'quẻ biến'))}. Tư vấn không gieo lại.` : '<strong>Chưa có phiên.</strong> Hãy gieo quẻ ở INPUT trước khi hỏi tiếp.';
+      const hasSession = !!state.analysis; $('session-context').innerHTML = hasSession ? `<strong>Phiên này đang dùng:</strong> ${escapeHtml(state.input.question)} · ${escapeHtml(state.input.total)} · ${escapeHtml((getReportParts().mainHex.ten_que || 'chưa có quẻ gốc'))} → ${escapeHtml((getReportParts().changedHex.ten_que || 'chưa có quẻ biến'))}. Không tạo lại kết quả.` : '<strong>Chưa có phiên.</strong> Hãy bắt đầu ở màn hình BẮT ĐẦU trước khi hỏi tiếp.';
       $('consult-engine-context').querySelector('.engine-tree').innerHTML = hasSession ? renderTreeNode(state.analysis.engine_output, 'engine_output') : 'Chưa có phiên.';
       if (!state.consultation.length) $('chat-history').innerHTML = '<div class="chat-empty">Lịch sử tư vấn sẽ xuất hiện ở đây. Context của phiên hiện tại được giữ nguyên cho mỗi câu hỏi.</div>'; else $('chat-history').innerHTML = state.consultation.map(item => `<div class="bubble ${item.role} ${item.pending ? 'pending' : ''}">${escapeHtml(item.text)}</div>`).join('');
       $('consult-send').disabled = !hasSession || state.consultationBusy; $('consult-question').disabled = !hasSession || state.consultationBusy; $('consult-loading').classList.toggle('show', state.consultationBusy); $('consult-error').classList.toggle('show', !!state.consultError); $('consult-error-text').textContent = state.consultError || '';
@@ -418,22 +441,21 @@
       const context = { input: state.input, engine_output: state.analysis.engine_output, ai_interpretation: state.analysis.ai_interpretation, history: state.consultation.slice(0, -1) };
       const prompt = `Bạn đang ở phiên tư vấn tiếp nối của Duyên Dịch. Không gieo lại quẻ và không thay đổi giá trị Engine. Hãy trả lời câu hỏi mới dựa trên context JSON thật dưới đây, phân biệt rõ dữ liệu Engine với diễn giải.\n\nCÂU HỎI MỚI: ${question}\n\nCONTEXT:\n${JSON.stringify(context, null, 2)}`;
       consultAbortTimer = setTimeout(() => {}, 130000);
-      try { const { data } = await getJson('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt, system_instruction: 'Bạn là lớp tư vấn realtime của Duyên Dịch. Không tự gieo lại quẻ, không bịa dữ liệu Engine và chỉ diễn giải context được cung cấp.', model: 'gemini-3.6-flash' }) }); state.consultation.push({ role: 'assistant', text: data.text || 'API không trả về nội dung tư vấn.' }); $('consult-question').value = ''; }
-      catch (failure) { state.consultError = `${failure.message}${failure.status ? ` (HTTP ${failure.status})` : ''}`; }
+      try { const { data } = await getJson('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt, system_instruction: 'Bạn là lớp tư vấn realtime của Duyên Dịch. Không tự gieo lại quẻ, không bịa dữ liệu Engine và chỉ diễn giải context được cung cấp.', model: 'gemini-3.6-flash' }) }); state.consultation.push({ role: 'assistant', text: data.text || 'Chưa nhận được câu trả lời.' }); $('consult-question').value = '';       } catch (failure) { state.consultError = formatFailure(failure); }
       finally { clearTimeout(consultAbortTimer); state.consultationBusy = false; renderConsult(); }
     }
     function renderMap() {
       const coordinates = state.coordinates || (state.input && state.input.latitude && state.input.longitude ? { latitude: Number(state.input.latitude), longitude: Number(state.input.longitude) } : null); const parts = getReportParts();
-      if (coordinates && Number.isFinite(coordinates.latitude) && Number.isFinite(coordinates.longitude)) { $('map-status').textContent = 'Đã có vị trí thiết bị'; $('map-description').textContent = 'Marker placeholder đang dùng GPS thật; chưa có map provider/key để vẽ bản đồ nền.'; $('map-gps').textContent = `${coordinates.latitude.toFixed(6)}, ${coordinates.longitude.toFixed(6)}`; } else { $('map-status').textContent = 'Chưa có vị trí'; $('map-description').textContent = 'Bật AUTO ở INPUT và cấp quyền định vị để hiển thị marker theo GPS thiết bị.'; $('map-gps').textContent = 'Chưa có dữ liệu'; }
-      const khi = parts.technical.vecto_khi || {}; $('map-direction').textContent = state.analysis ? text(khi.D, 'Engine chưa phát') : 'Chưa có Engine'; $('map-s07').textContent = state.analysis ? text(khi.S, 'Engine chưa phát') : 'Chưa có Engine'; $('map-angle').textContent = state.analysis ? text(khi.T, 'Engine chưa phát') : 'Chưa có Engine'; $('map-warning').textContent = state.analysis ? text(parts.interaction.nghich, 'Engine chưa phát') : 'Chưa có Engine'; $('map-remedy').textContent = state.analysis ? text(parts.interaction.thuan, 'Engine chưa phát') : 'Chưa có Engine';
+      if (coordinates && Number.isFinite(coordinates.latitude) && Number.isFinite(coordinates.longitude)) { $('map-status').textContent = 'Đã có vị trí thiết bị'; $('map-description').textContent = 'Đã nhận vị trí thật từ thiết bị. Bản đồ nền chưa được kết nối.'; $('map-gps').textContent = `${coordinates.latitude.toFixed(6)}, ${coordinates.longitude.toFixed(6)}`; } else { $('map-status').textContent = 'Chưa có vị trí'; $('map-description').textContent = 'Bật AUTO ở BẮT ĐẦU và cấp quyền định vị để hiển thị vị trí thiết bị.'; $('map-gps').textContent = 'Chưa có dữ liệu'; }
+      $('map-map-state').textContent = 'Chưa kết nối bản đồ nền';
       const mapFields = state.analysis ? { vecto_khi: parts.technical.vecto_khi, delta_field: parts.dynamics.delta_field, xu_huong: parts.progress.xu_huong, tuong_tac: parts.interaction } : null;
-      $('map-engine-context').querySelector('.engine-tree').innerHTML = mapFields ? renderTreeNode(mapFields, 'engine_map_fields') : 'Chưa có Engine.';
+      $('map-engine-context').querySelector('.engine-tree').innerHTML = mapFields ? renderTreeNode(mapFields, 'engine_map_fields') : 'Chưa có dữ liệu.';
     }
 
     async function analyze(payload) {
       const controller = new AbortController(); analysisAbortTimer = setTimeout(() => controller.abort(), 130000);
       try { const { data } = await getJson('/api/duyen-dich/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: controller.signal }); state.analysis = data; state.consultation = []; state.consultError = ''; renderResult(); setView('result'); }
-      catch (failure) { if (failure.name === 'AbortError') showError('API chưa phản hồi trong 130 giây. Hãy thử lại; backend có thể cần tới 120 giây cho một phiên phân tích.'); else showError(`${failure.message}${failure.status ? ` (HTTP ${failure.status})` : ''}`); }
+      catch (failure) { showError(formatFailure(failure)); }
       finally { clearTimeout(analysisAbortTimer); setBusy(false); renderInputSession(); }
     }
 
