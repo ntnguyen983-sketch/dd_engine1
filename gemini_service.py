@@ -1,8 +1,7 @@
 """Gemini API adapter for DUYEN DICH.
 
 The API key is read only from GEMINI_API_KEY. It is never stored in source code.
-Model can be overridden with GEMINI_MODEL; the default follows Google's current
-Gemini API examples.
+Model can be overridden with GEMINI_MODEL.
 """
 
 from __future__ import annotations
@@ -13,7 +12,7 @@ from typing import Any
 from google import genai
 from google.genai import types
 
-DEFAULT_MODEL = "gemini-3.6-flash"
+DEFAULT_MODEL = "gemini-2.5-flash"
 
 
 class GeminiConfigurationError(RuntimeError):
@@ -25,6 +24,11 @@ def _client() -> genai.Client:
     if not api_key:
         raise GeminiConfigurationError("GEMINI_API_KEY chưa được cấu hình.")
     return genai.Client(api_key=api_key)
+
+
+def _resolve_model(model: str | None = None) -> str:
+    """Always return a non-empty model name, including when the env var is blank."""
+    return (model or os.getenv("GEMINI_MODEL") or DEFAULT_MODEL).strip()
 
 
 def generate_text(
@@ -47,7 +51,7 @@ def generate_text(
         config_kwargs["system_instruction"] = system_instruction
 
     response = _client().models.generate_content(
-        model=model or os.getenv("GEMINI_MODEL", DEFAULT_MODEL),
+        model=_resolve_model(model),
         contents=prompt,
         config=types.GenerateContentConfig(**config_kwargs),
     )
@@ -59,11 +63,7 @@ def generate_text(
 
 
 def analyze_engine_output(engine_output: dict[str, Any], question: str = "") -> str:
-    """Ask Gemini to interpret an already-computed engine result.
-
-    This is deliberately post-engine: Gemini receives the deterministic engine
-    output and does not alter the core calculation.
-    """
+    """Ask Gemini to interpret an already-computed engine result."""
     import json
 
     payload = json.dumps(engine_output, ensure_ascii=False, default=str)
