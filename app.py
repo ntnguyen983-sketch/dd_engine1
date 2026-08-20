@@ -13,7 +13,7 @@ from engine.report import build_s12_report
 from gemini_service import GeminiConfigurationError, analyze_engine_output, generate_text
 
 app = Flask(__name__)
-DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL") or "gemini-2.5-flash"
+DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL") or "gemini-3.6-flash"
 
 
 def _json_safe(obj):
