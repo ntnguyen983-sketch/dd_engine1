@@ -24,11 +24,15 @@ v2.5.3 introduced a more abstract mathematical layer with a primitive configurat
 
 v2.8.x consolidated S00–S08, deterministic forward-only execution, DWL, L2-RGS, DPKE, Spacetime, BEC, warning/forecast/recommendation and canonical JSON/hash contracts. Later merged documents emphasize that BEC/Research and knowledge layers must not silently mutate frozen core state.
 
-## 6. v2.9.2 merged implementation lineage
+## 6. v2.9.0 reconciliation lineage
+
+v2.9.0 was a reconciliation release rather than a wholly new ontology. It addressed conflicts involving the 12-dimensional node space/Override Cascade, competing S07 label sets, delay formula variants and conflicting M_pol cells. It introduced/used a consistency gate so conflicting constants could not be casually marked canonical, and retained explicit registry/profile dependencies where matrices remained incomplete. This is important historical evidence for the current rule: do not fabricate missing mathematics.
+
+## 7. v2.9.2 merged implementation lineage
 
 The v2.9.2 merged reference implementation combined deterministic matrix core, DWL, DPKE, BEC observation, emergence, spacetime, ROM, warning, implication, forecast, recommendation and canonical JSON. Its regression checklist requires deterministic hashing, dimensions/version/constants/test vectors, evidence chains and no observation-to-core feedback.
 
-## 7. Current architectural interpretation
+## 8. Current architectural interpretation
 
 The current DD-3A anchor does not require historical equations to remain canonical. It preserves the architecture of observation → interaction → dynamics/rhythm → transition → ground truth/calibration, while reducing the final representational vocabulary to **Định danh | Định lượng | Định tính**.
 
