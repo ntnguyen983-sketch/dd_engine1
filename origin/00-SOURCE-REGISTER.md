@@ -27,8 +27,16 @@ These cover the S00–S08 lineage, six-line/state-space operators, DWL, DPKE, fo
 - `DUYEN_DICH_UNIFIED_MASTER_SPEC_2.8.7_REV.B.pdf`
 - `DUYEN_DICH_UNIFIED_MASTER_SPEC_2.8.7_REV.B(1).pdf`
 - `DD v2.8.7.pdf`
+- `DD_SPEC_2.8.7_BEC_MASTER_RESTRUCTURED.pdf`
+- `DD_SPEC_2.8.7_BEC_MASTER_RESTRUCTURED(1).pdf`
+- `Duyen_Dich_Huong_Dan_Thuc_Thi_v287_BEC.pdf`
 
 These preserve the research/BEC/calibration lineage and the Rev.A/Rev.B authority boundaries.
+
+## v2.9.x lineage
+
+- `Đã dán markdown (1)(4).md` — v2.9.0 BEC-DPKE runtime prompt lineage and Core Lock/UI execution discipline.
+- `DUYÊN DỊCH MASTER_v2.9.2_MERGED_FREEZE.docx` — merged-freeze architecture, regression checklist, unresolved-operator audit and deterministic output contract.
 
 ## v3.x / current anchor
 
