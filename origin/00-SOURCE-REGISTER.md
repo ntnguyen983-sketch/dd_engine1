@@ -5,8 +5,16 @@ This register records the source documents that must be reconciled into the orig
 ## Early / foundational
 
 - Early Duyên Dịch / Đạo–Duyên–Dịch notes and prior theory documents from the project history.
-- `Duyên Dịch v2.3.6.pdf` — kernel, philosophy, axioms, ontology, 7-layer architecture, PGL/OCG, traceability and freeze policy.
-- `Duyên Dịch mt v2.3.7_new.pdf` — full v2.3.7 system manual and runtime formalism.
+- `Duyên Dịch v2.3.6.pdf` — kernel, philosophy, axioms, ontology, seven-layer architecture, PGL/OCG, traceability and freeze policy.
+- `Duyên Dịch mt v2.3.7_new.pdf` — full v2.3.7 system manual, state spaces, relation operators and runtime formalism.
+- `ddnew1.PDF` — broader ontology/knowledge-integration lineage, UK1–UK8 and layered integration model.
+- `Master D.D.pdf` — consolidated earlier master specification and freeze/ontology lineage.
+
+## v2.4–v2.5 research lineage
+
+- `DUYÊN DỊCH ENGINE SPECIFICATION (V2.5.3)_..pdf` — abstract mathematical research branch including Configuration Potential Ψ, derived quantities and explicit warning that these are model axioms rather than experimentally verified natural laws.
+
+This branch must remain distinguishable from later canonical runtime contracts.
 
 ## v2.8.x core
 
@@ -37,6 +45,7 @@ These preserve the research/BEC/calibration lineage and the Rev.A/Rev.B authorit
 
 - `Đã dán markdown (1)(4).md` — v2.9.0 BEC-DPKE runtime prompt lineage and Core Lock/UI execution discipline.
 - `DUYÊN DỊCH MASTER_v2.9.2_MERGED_FREEZE.docx` — merged-freeze architecture, regression checklist, unresolved-operator audit and deterministic output contract.
+- `duyen_dich_engine_v293_full.py` — executable v2.9.2 merged reference implementation; useful as implementation evidence, not as authority over the later architectural anchor.
 
 ## v3.x / current anchor
 
